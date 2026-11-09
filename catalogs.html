@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium E-Invitation Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #121212;
+            --card-bg: #1E1E1E;
+            --gold: #D4AF37;
+            --text: #FFFFFF;
+            --text-sub: #A0A0A0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        .header p {
+            color: var(--text-sub);
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1100px;
+        }
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 40px 25px;
+            width: 300px;
+            text-align: center;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+        }
+        .product-card.popular {
+            border: 2px solid var(--gold);
+            transform: scale(1.05);
+        }
+        .product-card.popular:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+        .badge {
+            position: absolute;
+            top: -15px; left: 50%; transform: translateX(-50%);
+            background: var(--gold); color: #000;
+            font-size: 0.75rem; font-weight: 700;
+            padding: 6px 20px; border-radius: 20px;
+            text-transform: uppercase; letter-spacing: 1.5px;
+        }
+        .package-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .price {
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+        }
+        .price span { font-size: 1rem; color: var(--text-sub); font-weight: 400; margin-left: 5px;}
+        .features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            line-height: 2;
+        }
+        .features li { display: flex; align-items: flex-start; margin-bottom: 8px;}
+        .features li::before { 
+            content: '✓'; color: var(--gold); margin-right: 12px; font-weight: bold; font-size: 1.1rem;
+        }
+        .btn-preview {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 30px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-preview:hover {
+            background: var(--gold);
+            color: #000;
+        }
+        
+        /* Modal Popup Style */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            width: 100%; height: 100%; max-width: 400px;
+            border: none; border-radius: 12px; background: #fff;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+        }
+        .close-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: var(--gold); color: #000; border: none;
+            width: 45px; height: 45px; border-radius: 50%;
+            font-size: 1.8rem; font-weight: bold; cursor: pointer;
+            z-index: 1001; display: flex; justify-content: center; align-items: center;
+            transition: transform 0.2s;
+        }
+        .close-btn:hover { transform: scale(1.1); }
+
+        /* Footer */
+        .footer {
+            margin-top: 80px;
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Elegant E-Invitation</h1>
+        <p>Make Your Dream Wedding Card</p>
+    </div>
+
+    <div class="products">
+        
+        <!-- BASIC PACKAGE -->
+        <div class="product-card">
+            <div class="package-name">Basic</div>
+            <div class="price">$5<span>/card</span></div>
+            <ul class="features">
+                <li>Front & Back Card Images</li>
+                <li>Background Music (Web Audio)</li>
+                <li>RSVP via WhatsApp</li>
+                <li>Google Maps Integration</li>
+            </ul>
+            <!-- TUKAR 'index.html' ke fail kad basic awak nanti -->
+            <button class="btn-preview" onclick="openPreview('index.html')">View Sample</button>
+        </div>
+
+        <!-- PREMIUM PACKAGE -->
+        <div class="product-card popular">
+            <div class="badge">Best Seller</div>
+            <div class="package-name">Premium</div>
+            <div class="price">$7<span>/card</span></div>
+            <ul class="features">
+                <li>All Basic Features</li>
+                <li>3D Flip Card Effect</li>
+                <li>Live Countdown Timer</li>
+                <li>Bilingual RSVP Text</li>
+                <li>Add to Calendar Button</li>
+            </ul>
+            <!-- TUKAR 'index.html' ke fail kad premium awak nanti -->
+            <button class="btn-preview" onclick="openPreview('index.html')">View Sample</button>
+        </div>
+
+        <!-- DELUXE PACKAGE -->
+        <div class="product-card">
+            <div class="package-name">Deluxe</div>
+            <div class="price">$10<span>/card</span></div>
+            <ul class="features">
+                <li>All Premium Features</li>
+                <li>Royal Theme (Maroon/Gold)</li>
+                <li>Cinematic Auto-Scroll</li>
+                <li>Confetti & Gold Dust Effects</li>
+                <li>3D Metallic Glare Effect</li>
+            </ul>
+            <!-- TUKAR 'index.html' ke fail kad deluxe awak nanti -->
+            <button class="btn-preview" onclick="openPreview('index.html')">View Sample</button>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>Created with ❤️ using DeepSeek AI.</p>
+    </div>
+
+    <!-- Modal untuk Preview -->
+    <div class="modal" id="previewModal">
+        <button class="close-btn" onclick="closePreview()">×</button>
+        <iframe class="modal-content" id="previewFrame" src=""></iframe>
+    </div>
+
+    <script>
+        function openPreview(url) {
+            document.getElementById('previewFrame').src = url;
+            document.getElementById('previewModal').style.display = 'flex';
+        }
+        function closePreview() {
+            document.getElementById('previewFrame').src = '';
+            document.getElementById('previewModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
