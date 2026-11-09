@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium E-Invitation Services</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* --- DARK THEME VARIABLES --- */
         :root {
@@ -12,7 +12,7 @@
             --card-bg: #1E1E1E; /* Slightly Lighter Grey */
             --gold: #E5C158; /* Premium Gold */
             --text-white: #FFFFFF;
-            --text-grey: #A0A0A0;
+            --text-grey: #D1D1D1; /* Lebih cerah sikit supaya senang baca */
             --border-color: #333333;
         }
 
@@ -44,7 +44,7 @@
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 50px 35px;
-            width: 320px;
+            width: 340px; /* Lebar sikit untuk muat teks besar */
             text-align: center;
             position: relative;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -88,7 +88,7 @@
         /* --- TEKS DALAM KAD --- */
         .package-name {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             margin-bottom: 10px;
             color: var(--text-white);
@@ -98,7 +98,7 @@
             font-size: 3.5rem;
             font-weight: 700;
             color: var(--gold);
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             display: flex;
             justify-content: center;
             align-items: baseline;
@@ -111,18 +111,18 @@
             margin-left: 5px;
         }
 
-        /* Senarai Ciri (Features) */
+        /* Senarai Ciri (Features) - DITUNING IKUT GAMBAR */
         .features {
             list-style: none;
             text-align: left;
             margin-bottom: 40px;
-            flex-grow: 1; /* Buat butang sentiasa di bawah */
+            flex-grow: 1; 
         }
 
         .features li {
-            font-size: 0.85rem;
-            color: var(--text-grey);
-            margin-bottom: 18px;
+            font-size: 1.05rem; /* Saiz teks lebih besar */
+            color: var(--text-white);
+            margin-bottom: 22px; /* Jarak antara baris lebih lapang */
             display: flex;
             align-items: flex-start;
             line-height: 1.4;
@@ -133,8 +133,8 @@
             content: '✓';
             color: var(--gold);
             font-weight: bold;
-            font-size: 1.1rem;
-            margin-right: 12px;
+            font-size: 1.3rem; /* Tick lebih besar */
+            margin-right: 15px; /* Jarak tick ke teks */
             line-height: 1;
         }
 
@@ -142,14 +142,14 @@
         .btn-preview {
             display: block;
             width: 100%;
-            padding: 16px;
+            padding: 18px;
             background-color: transparent;
             border: 2px solid var(--gold);
             color: var(--gold);
             text-decoration: none;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             border-radius: 50px;
             transition: all 0.3s ease;
             cursor: pointer;
@@ -231,7 +231,6 @@
                 <li>RSVP via WhatsApp</li>
                 <li>Google Maps Integration</li>
             </ul>
-            <!-- Awak boleh tukar 'index.html' ke fail kad Basic awak -->
             <button class="btn-preview" onclick="openPreview('index.html')">View Sample</button>
         </div>
 
@@ -247,7 +246,6 @@
                 <li>Bilingual RSVP Text</li>
                 <li>Add to Calendar Button</li>
             </ul>
-            <!-- Awak boleh tukar ke fail kad Premium awak -->
             <button class="btn-preview" onclick="openPreview('index.html')">View Sample</button>
         </div>
 
@@ -262,7 +260,6 @@
                 <li>Confetti & Gold Dust Effects</li>
                 <li>3D Metallic Glare Effect</li>
             </ul>
-            <!-- Awak boleh tukar ke fail kad Deluxe awak -->
             <button class="btn-preview" onclick="openPreview('index.html')">View Sample</button>
         </div>
 
@@ -278,7 +275,6 @@
         function openPreview(url) {
             document.getElementById('previewFrame').src = url;
             document.getElementById('previewModal').style.display = 'flex';
-            // Untuk elak skrol di belakang popup
             document.body.style.overflow = 'hidden'; 
         }
 
