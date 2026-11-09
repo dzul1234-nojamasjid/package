@@ -6,7 +6,8 @@
     <title>Teruna & Dara Wedding Invitation</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* --- VARIABLES & THEME (IVORY & SAGE GREEN) --- */
+        /* --- VARIABLES & THEME --- */
+        /* DEFAULT: LIGHT MODE */
         :root {
             --bg-color: #F9F6F0; 
             --text-main: #3A4A3F; 
@@ -17,6 +18,7 @@
             --shadow: 0 20px 50px rgba(0,0,0,0.1);
         }
 
+        /* DARK MODE OVERRIDES */
         body.dark-mode {
             --bg-color: #1A1D1A; 
             --text-main: #E8E8E8;
@@ -111,7 +113,6 @@
             background-position: center; background-repeat: no-repeat;
             border: 5px solid var(--card-bg);
         }
-        /* Tukar nama fail gambar mengikut gambar awak */
         .card-front { background-image: url('teruna-depan.jpg'); }
         .card-back { background-image: url('teruna-belakang.jpg'); transform: rotateY(180deg); }
 
@@ -122,6 +123,7 @@
         }
         .parents-text {
             font-size: 0.8rem; color: var(--text-sub); margin-bottom: 10px;
+            line-height: 1.5;
         }
         .names {
             font-family: 'Great Vibes', cursive;
@@ -131,7 +133,7 @@
         
         .date-container {
             display: flex; flex-direction: column; align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
         .day-text {
             font-family: 'Great Vibes', cursive;
@@ -146,6 +148,15 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 0.85rem; font-weight: 500;
             letter-spacing: 2px; color: var(--text-sub); margin-top: 5px;
+        }
+
+        /* --- VENUE DETAILS --- */
+        .venue-text {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            margin-bottom: 25px;
+            line-height: 1.4;
+            padding: 0 10px;
         }
 
         /* --- COUNTDOWN --- */
@@ -183,7 +194,8 @@
         }
     </style>
 </head>
-<body>
+<!-- TAMBAH CLASS dark-mode PADA BODY UNTUK DEFAULT DARK -->
+<body class="dark-mode">
 
     <div id="splash">
         <h1>Teruna & Dara</h1>
@@ -196,7 +208,8 @@
     <div id="main-content">
         <div class="top-controls">
             <button class="control-btn" id="audioBtn" onclick="toggleAudio()" title="Play Music">🎵</button>
-            <button class="control-btn" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+            <!-- Default Icon Tunjuk Matahari (Sebab asal Dark Mode) -->
+            <button class="control-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Theme">☀️</button>
         </div>
 
         <div class="scene" id="scene">
@@ -207,7 +220,6 @@
         </div>
 
         <div class="info-section" id="details">
-            <!-- Teks ibu bapa pengantin -->
             <div class="parents-text">
                 Together with their families<br>
                 <b>Pak Pandir & Mak Andeh</b><br>
@@ -220,11 +232,16 @@
                 Teruna <br>&<br> Dara
             </div>
             
-            <!-- Tarikh: 29 Feb 2027 (Monday) -->
             <div class="date-container">
                 <div class="day-text">Monday</div>
                 <div class="date-text">29 February 2027</div>
                 <div class="time-text">12:00 PM - 12:00 AM</div>
+            </div>
+
+            <div class="venue-text">
+                <b>AR RAYYAN RESTAURANT</b><br>
+                Blk 253 Choa Chu Kang Ave 1, #01-21<br>
+                Singapore 680253
             </div>
 
             <div class="countdown-container" id="countdown">
@@ -235,13 +252,12 @@
             </div>
 
             <div class="action-buttons">
-                <!-- Butang RSVP dummy -->
-                <a href="#" target="_blank" class="btn-action btn-rsvp">
+                <a href="https://wa.me/6591234567?text=Hello%20Pak%20Pandir,%20saya%20nak%20RSVP%20majlis%20Teruna%20%26%20Dara." target="_blank" class="btn-action btn-rsvp">
                     💬 RSVP via WhatsApp
                 </a>
-                <!-- Butang Maps dummy -->
+                <!-- Link Maps dikemaskini ke AR RAYYAN -->
                 <a href="https://maps.google.com/?q=AR+RAYYAN+RESTAURANT+Blk+253+Choa+Chu+Kang+Ave+1" target="_blank" class="btn-action btn-maps">
-               📍 View Location (AR RAYYAN)
+                    📍 View Location (AR RAYYAN)
                 </a>
                 <button onclick="downloadICS()" class="btn-action btn-calendar">
                     📅 Add to Calendar
@@ -285,10 +301,17 @@
             window.addEventListener(evt, () => { autoScrollActive = false; }, { passive: true });
         });
 
+        // --- LOGIK TUKAR TEMA ---
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
-            const btn = document.querySelectorAll('.control-btn')[1];
-            btn.innerHTML = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            const btn = document.getElementById('themeBtn');
+            
+            // Tukar ikon berdasarkan mode semasa
+            if(document.body.classList.contains('dark-mode')) {
+                btn.innerHTML = '☀️'; // Jika dark, tunjuk matahari (untuk ke light)
+            } else {
+                btn.innerHTML = '🌙'; // Jika light, tunjuk bulan (untuk ke dark)
+            }
         }
 
         const card = document.getElementById('card');
@@ -313,13 +336,10 @@
             setTimeout(() => card.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)', 500);
         });
 
-        // --- COUNTDOWN (Ubah Tarikh Di Sini) ---
         const targetDate = new Date("February 29, 2027 12:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            // Nota: 2027 tiada 29 Feb, jadi timer ni mungkin akan tunjuk minus nanti.
-            // Untuk test, tukar ke tahun 2028 (tahun lompat).
             if (distance < 0) return; 
 
             document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
@@ -328,7 +348,6 @@
             document.getElementById("secs").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // --- MUZIK (Kekal sama) ---
         function playLoopAudio() {
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -386,7 +405,7 @@
         }
 
         function downloadICS() {
-            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Teruna&Dara//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20270229T120000Z\nDTEND:20270301T000000Z\nSUMMARY:Wedding of Teruna & Dara\nLOCATION:The Fairy Tale Hall, Singapore\nDESCRIPTION:This is a dummy event for testing purposes.\nEND:VEVENT\nEND:VCALENDAR`;
+            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Teruna&Dara//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20270229T120000Z\nDTEND:20270301T000000Z\nSUMMARY:Wedding of Teruna & Dara\nLOCATION:AR RAYYAN RESTAURANT, Blk 253 Choa Chu Kang Ave 1, #01-21, Singapore 680253\nDESCRIPTION:This is a dummy event for testing purposes. Majlis di AR RAYYAN RESTAURANT!\nEND:VEVENT\nEND:VCALENDAR`;
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
