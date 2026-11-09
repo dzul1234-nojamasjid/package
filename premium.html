@@ -90,7 +90,7 @@
         }
         .control-btn:hover { transform: scale(1.1); }
 
-        /* --- 3D CARD --- */
+        /* --- 3D CARD SCENE (FIXED) --- */
         .scene {
             width: 100%; max-width: 320px; height: 480px;
             perspective: 1200px; margin-top: 50px; margin-bottom: 30px; z-index: 10;
@@ -101,15 +101,25 @@
             transform-style: preserve-3d; cursor: pointer;
         }
         .card-container.flipped { transform: rotateY(180deg); }
+        
         .card-face {
-            position: absolute; width: 100%; height: 100%;
-            backface-visibility: hidden; border-radius: 14px;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            backface-visibility: hidden; -webkit-backface-visibility: hidden; /* Fix untuk iOS/Safari */
+            border-radius: 14px;
             box-shadow: var(--shadow); background-size: cover;
             background-position: center; background-repeat: no-repeat;
             border: 5px solid var(--card-bg);
+            background-color: #333; /* Warna placeholder kalau gambar tiada */
         }
-        .card-front { background-image: url('teruna-premium-depan.jpg'); }
-        .card-back { background-image: url('teruna-premium-belakang.jpg'); transform: rotateY(180deg); }
+        
+        .card-front { 
+            background-image: url('teruna-premium-depan.jpg'); 
+            transform: rotateY(0deg); /* Depan tak perlu pusing */
+        }
+        .card-back { 
+            background-image: url('teruna-premium-belakang.jpg'); 
+            transform: rotateY(180deg); /* Belakang pusing 180 darjah dari awal */
+        }
 
         /* --- INFO --- */
         .info-section {
@@ -301,8 +311,9 @@
             card.classList.toggle('flipped', isFlipped);
         }
 
+        // LOGIK TILT: Pastikan ia tak berlanggar dengan fungsi FLIP
         document.getElementById('scene').addEventListener('mousemove', (e) => {
-            if(isFlipped) return;
+            if(isFlipped) return; // Jangan tilt kalau kad sedang tunjuk belakang
             const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
             const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
             card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
@@ -381,7 +392,7 @@
         }
 
         function downloadICS() {
-            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Teruna&Dara-Premium//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20270229T120000Z\nDTEND:20270301T000000Z\nSUMMARY:Wedding of Teruna & Dara\nLOCATION:AR RAYYAN RESTAURANT, Blk 253 Choa Chu Kang Ave 1, #01-21, Singapore 680253\nDESCRIPTION:This is a dummy event for testing purposes. Majlis di AR RAYYAN RESTAURANT!\nEND:VEVENT\nEND:VCALENDAR`;
+            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Teruna&Dara-Premium//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20270229T040000Z\nDTEND:20270228T160000Z\nSUMMARY:Wedding of Teruna & Dara\nLOCATION:AR RAYYAN RESTAURANT, Blk 253 Choa Chu Kang Ave 1, #01-21, Singapore 680253\nDESCRIPTION:Majlis perkahwinan Teruna & Dara di AR RAYYAN RESTAURANT.\nEND:VEVENT\nEND:VCALENDAR`;
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
