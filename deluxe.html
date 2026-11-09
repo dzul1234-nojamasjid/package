@@ -726,7 +726,7 @@
             // --- WISH BOARD LOGIC ---
         async function loadWishes() {
             try {
-                const response = await fetch(SCRIPT_URL, { method: 'GET' }); // Guna GET
+                const response = await fetch(SCRIPT_URL + '?t=' + new Date().getTime(), { method: 'GET' }); // Guna GET
                 const wishes = await response.json();
                 const list = document.getElementById('wishesList');
 
