@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teruna & Dara — Deluxe Invitation</title>
+    <title>S & H Wedding Invitation</title>
     <link rel="icon" href="data:,">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* --- ROYAL MAROON & GOLD THEME --- */
+        /* --- VARIABLES & THEME --- */
         :root {
-            --bg-color: #FDF8F3; 
-            --text-main: #3B151A; /* Dark Maroon */
-            --text-sub: #6A3B42;
-            --accent-gold: #D4AF37; /* Bright Gold */
-            --accent-maroon: #5C1A2E; 
+            --bg-color: #F9F6F0; 
+            --text-main: #3A4A3F; 
+            --text-sub: #6B705C;
+            --accent-rose: #B76E79; 
+            --accent-gold: #C5A880;
             --card-bg: #FFFFFF;
-            --shadow: 0 20px 50px rgba(92, 26, 46, 0.2);
+            --shadow: 0 20px 50px rgba(0,0,0,0.1);
         }
 
         body.dark-mode {
-            --bg-color: #1A0A0E; /* Very Dark Maroon */
-            --text-main: #F7E7CE; /* Light Gold/Ivory */
-            --text-sub: #C5A880;
-            --card-bg: #2C1017;
-            --shadow: 0 20px 50px rgba(0,0,0,0.8);
+            --bg-color: #1A1D1A; 
+            --text-main: #E8E8E8;
+            --text-sub: #A0A0A0;
+            --card-bg: #232723;
+            --shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,9 +39,10 @@
             align-items: flex-start;
             min-height: 100vh;
             padding-top: 10px;
+            scroll-behavior: smooth;
         }
 
-        /* --- SPLASH & CONFETTI --- */
+        /* --- SPLASH SCREEN --- */
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-color); z-index: 9999;
@@ -51,24 +52,24 @@
         }
         #splash h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.2rem; letter-spacing: 2px;
-            color: var(--accent-gold); margin-bottom: 20px; text-align: center;
+            font-size: 2rem; letter-spacing: 2px;
+            color: var(--accent-rose); margin-bottom: 20px; text-align: center;
         }
         .btn-open {
-            padding: 14px 35px; border: 2px solid var(--accent-gold);
-            background: transparent; color: var(--accent-gold);
-            font-size: 1rem; letter-spacing: 2px; font-weight: 600;
+            padding: 12px 30px; border: 1px solid var(--accent-rose);
+            background: transparent; color: var(--accent-rose);
+            font-family: 'Montserrat', sans-serif; font-size: 1rem; letter-spacing: 1px;
             cursor: pointer; border-radius: 30px; transition: all 0.3s;
             animation: pulse 2s infinite;
         }
-        .btn-open:hover { background: var(--accent-gold); color: var(--bg-color); }
+        .btn-open:hover { background: var(--accent-rose); color: #fff; }
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(183, 110, 121, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(183, 110, 121, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(183, 110, 121, 0); }
         }
 
-        /* --- MAIN --- */
+        /* --- MAIN CONTENT --- */
         #main-content {
             opacity: 0; visibility: hidden;
             transition: opacity 1.5s ease;
@@ -85,120 +86,129 @@
             background: var(--card-bg); border: 1px solid var(--accent-gold);
             color: var(--text-main); width: 40px; height: 40px; 
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             font-size: 1.1rem; transition: all 0.3s;
         }
         .control-btn:hover { transform: scale(1.1); }
 
-        /* --- 3D CARD SCENE (ROYAL EDITION) --- */
+        /* --- 3D CARD SCENE --- */
         .scene {
             width: 100%; max-width: 320px; height: 480px;    
-            perspective: 1200px; margin-top: 50px; margin-bottom: 30px; z-index: 10;
+            perspective: 1000px; margin-top: 50px; margin-bottom: 30px; z-index: 10;
         }
-        
         .card-container {
             width: 100%; height: 100%; position: relative;
             transition: transform 0.8s ease-in-out;
             transform-style: preserve-3d;
             cursor: pointer;
         }
-        
         .card-container.flipped { transform: rotateY(180deg); }
-        
         .card-face {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             -webkit-backface-visibility: hidden; backface-visibility: hidden;
-            border-radius: 12px;
-            box-shadow: var(--shadow); background-size: cover;
+            border-radius: 12px; box-shadow: var(--shadow); background-size: cover;
             background-position: center; background-repeat: no-repeat;
-            border: 6px solid var(--accent-gold); /* Border Emas Tebal */
-            background-color: #333;
-            overflow: hidden; /* Untuk Gold Glare */
+            border: 5px solid var(--card-bg); background-color: #333;
         }
-        
-        /* Efek Kilau Emas (Gold Glare) */
-        .card-face::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,215,0,0.4) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            transition: 0.5s;
-            pointer-events: none; /* Elak halang klik */
-        }
-        .card-container:hover .card-front::before {
-            left: 125%; /* Kilau bergerak dari kiri ke kanan */
-        }
+        .card-front { background-image: url('depan.jpg'); transform: rotateY(0deg); }
+        .card-back { background-image: url('belakang.jpg'); transform: rotateY(180deg); }
 
-        .card-front { background-image: url('teruna-deluxe-depan.jpg'); }
-        .card-back { background-image: url('teruna-deluxe-belakang.jpg'); transform: rotateY(180deg); }
-
-        /* --- INFO SECTION --- */
-        .info-section {
-            text-align: center; max-width: 350px;
-            margin-bottom: 50px; padding-top: 20px;
-        }
-        .parents-text { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 15px; line-height: 1.6; }
-        .names {
-            font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--accent-gold);
-            margin-bottom: 10px; line-height: 1.1;
-        }
-        
+        /* --- TEXT & BUTTONS SECTION --- */
+        .info-section { text-align: center; max-width: 350px; margin-bottom: 50px; padding-top: 20px; }
+        .names { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--accent-rose); margin-bottom: 5px; line-height: 1.1; }
         .date-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; }
-        .day-text { font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--accent-gold); margin-bottom: -5px; }
-        .date-text {
-            font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
-            letter-spacing: 3px; text-transform: uppercase; color: var(--text-main);
-        }
-        .time-text {
-            font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 500;
-            letter-spacing: 2px; color: var(--text-sub); margin-top: 5px;
-        }
-
-        .venue-text { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 25px; line-height: 1.5; }
+        .day-text { font-family: 'Great Vibes', cursive; font-size: 2rem; color: var(--accent-rose); margin-bottom: -5px; }
+        .date-text { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-main); }
+        .time-text { font-size: 0.85rem; font-weight: 500; letter-spacing: 2px; color: var(--text-sub); margin-top: 5px; }
 
         /* --- COUNTDOWN --- */
-        .countdown-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 30px; }
-        .countdown-box {
-            background: var(--card-bg); padding: 10px 12px;
-            border-radius: 8px; border: 1px solid var(--accent-gold); min-width: 65px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .countdown-box span { display: block; font-size: 1.4rem; font-weight: 600; color: var(--accent-gold); }
+        .countdown-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; }
+        .countdown-box { background: var(--card-bg); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--accent-gold); min-width: 60px; }
+        .countdown-box span { display: block; font-size: 1.3rem; font-weight: 600; color: var(--accent-rose); }
         .countdown-box small { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-sub); }
 
-        /* --- BUTTONS --- */
+        /* --- ACTION BUTTONS --- */
         .action-buttons { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         .btn-action {
             display: flex; align-items: center; justify-content: center; gap: 10px;
             padding: 14px; border-radius: 30px; text-decoration: none;
-            font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;
+            font-weight: 500; font-size: 0.85rem; letter-spacing: 1px;
             transition: all 0.3s; border: none; cursor: pointer;
         }
-        .btn-rsvp { background-color: var(--accent-gold); color: #1A0A0E; }
-        .btn-rsvp-alt { background-color: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold); }
+        .btn-rsvp { background-color: var(--accent-rose); color: #fff; }
         .btn-maps, .btn-calendar { background-color: transparent; border: 1px solid var(--accent-gold); color: var(--text-main); }
-        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
+        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
 
-        /* --- PARTICLES & CONFETTI CANVAS --- */
+        /* --- PARTICLES --- */
         #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9998; pointer-events: none; }
-    </style>
-</head>
-<body class="dark-mode">
 
-    <canvas id="confetti-canvas"></canvas>
+        /* --- RSVP & WISH MODAL STYLES --- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content {
+            background: var(--card-bg); padding: 30px; border-radius: 15px;
+            width: 90%; max-width: 400px; position: relative; text-align: left;
+            box-shadow: var(--shadow); color: var(--text-main);
+        }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; color: var(--text-sub); }
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc;
+            border-radius: 8px; font-family: 'Montserrat', sans-serif; background: var(--bg-color); color: var(--text-main);
+        }
+        .modal-content label { font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; display: block; }
+
+        /* --- GUIDE MODAL STYLES --- */
+        .guide-content {
+            max-height: 80vh; overflow-y: auto; font-size: 0.85rem; line-height: 1.5;
+        }
+        .guide-content h3 { color: var(--accent-rose); margin-top: 15px; margin-bottom: 5px; font-family: 'Playfair Display', serif;}
+        .guide-content ul { padding-left: 20px; margin-bottom: 10px; }
+        .guide-content li { margin-bottom: 5px; }
+        .guide-content code { background: #eee; padding: 2px 4px; border-radius: 4px; color: #d63384; font-family: monospace; }
+        body.dark-mode .guide-content code { background: #333; color: #ff99cc; }
+                /* --- WISH BOARD --- */
+        .wish-board {
+            width: 100%; margin-top: 40px; padding: 20px; 
+            margin-left: auto; margin-right: auto; /* <-- TAMBAH BARIS NI */
+            background: var(--card-bg); border-radius: 15px; 
+            box-shadow: var(--shadow); text-align: center;
+        }
+        .wish-title {
+            font-family: 'Playfair Display', serif; color: var(--accent-rose); 
+            margin-bottom: 15px; font-size: 1.2rem;
+        }
+        .wishes-list {
+            max-height: 250px; overflow-y: auto; text-align: left; padding-right: 5px;
+        }
+        .wish-card {
+            background: var(--bg-color); padding: 12px; margin-bottom: 10px;
+            border-radius: 8px; border-left: 3px solid var(--accent-gold);
+            font-size: 0.85rem; line-height: 1.4;
+        }
+        .wish-card strong { color: var(--accent-rose); display: block; margin-bottom: 3px; }    
+        </style>
+</head>
+<body>
 
     <div id="splash">
-        <h1>Teruna & Dara</h1>
-        <p style="margin-bottom: 30px; font-size: 1rem; letter-spacing: 3px; color: var(--accent-gold);">29 . 02 . 2027</p>
-        <button class="btn-open" onclick="openInvitation()">Tap to Open 👑</button>
+        <h1>Syahiran & Nurhidayah</h1>
+        <p style="margin-bottom: 30px; font-size: 0.9rem; letter-spacing: 2px;">22 . 11 . 2026</p>
+        <button class="btn-open" onclick="openInvitation()">Tap to Open 💌</button>
     </div>
 
     <div id="particles-js"></div>
 
     <div id="main-content">
+        <!-- Butang Panduan (Untuk Client) -->
+        <button class="control-btn" onclick="openGuide()" title="Client Guide" style="position: fixed; top: 15px; left: 15px; z-index: 100;">❓</button>
+        
         <div class="top-controls">
-            <button class="control-btn" id="audioBtn" onclick="toggleAudio()">🎵</button>
-            <button class="control-btn" id="themeBtn" onclick="toggleTheme()">☀️</button>
+            <button class="control-btn" id="audioBtn" onclick="toggleAudio()" title="Play Music">🎵</button>
+            <button class="control-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
         </div>
 
         <div class="scene" id="scene">
@@ -209,26 +219,12 @@
         </div>
 
         <div class="info-section" id="details">
-            <div class="parents-text">
-                Together with their families<br>
-                <b>Pak Pandir & Mak Andeh</b><br>
-                (Parents of the Groom)<br><br>
-                <b>Pak Oteh & Mak Oteh</b><br>
-                (Parents of the Bride)
-            </div>
-
-            <div class="names">Teruna <br>&<br> Dara</div>
+            <div class="names">Syahiran & Nurhidayah</div>
             
             <div class="date-container">
-                <div class="day-text">Monday</div>
-                <div class="date-text">29 February 2027</div>
-                <div class="time-text">12:00 PM - 12:00 AM</div>
-            </div>
-
-            <div class="venue-text">
-                <b>AR RAYYAN RESTAURANT</b><br>
-                Blk 253 Choa Chu Kang Ave 1, #01-21<br>
-                Singapore 680253
+                <div class="day-text">Sunday</div>
+                <div class="date-text">22 November 2026</div>
+                <div class="time-text">5:30 PM - 9:30 PM</div>
             </div>
 
             <div class="countdown-container" id="countdown">
@@ -239,105 +235,139 @@
             </div>
 
             <div class="action-buttons">
-                <a href="https://wa.me/6591234567?text=Salam%20Pak%20Pandir%20%26%20Mak%20Andeh%2C%20saya%20nak%20RSVP%20kehadiran%20majlis%20Teruna%20%26%20Dara%20pada%2029%20Feb%202027.%20Terima%20kasih!" target="_blank" class="btn-action btn-rsvp">
-                    💬 RSVP (Bahasa Melayu)
-                </a>
-                <a href="https://wa.me/6591234567?text=Hello%20Pak%20Pandir%20%26%20Mak%20Andeh%2C%20I%20would%20like%20to%20RSVP%20for%20Teruna%20%26%20Dara's%20wedding%20on%2029%20Feb%202027.%20Thank%20you!" target="_blank" class="btn-action btn-rsvp-alt">
-                    💬 RSVP (English)
-                </a>
-                <a href="https://maps.google.com/?q=AR+RAYYAN+RESTAURANT+Blk+253+Choa+Chu+Kang+Ave+1" target="_blank" class="btn-action btn-maps">
-                    📍 View Location (AR RAYYAN)
+                <button onclick="openRSVP()" class="btn-action btn-rsvp">
+                    💌 RSVP Now
+                </button>
+                <button onclick="openWish()" class="btn-action btn-calendar">
+                    ✨ Leave a Wish
+                </button>
+                <a href="https://maps.google.com/?q=The+Iris+810+Geylang+Road+City+Plaza+Singapore+409286" target="_blank" class="btn-action btn-maps">
+                    📍 View Location (The Iris)
                 </a>
                 <button onclick="downloadICS()" class="btn-action btn-calendar">
                     📅 Add to Calendar
                 </button>
             </div>
+            <!-- WISH BOARD SECTION -->
+            <div class="wish-board" id="wishBoard">
+                <h3 class="wish-title">Wishes from Loved Ones</h3>
+                <div id="wishesList" class="wishes-list">
+                    <!-- Ucapan akan keluar di sini secara automatik -->
+                    <p style="text-align:center; font-style:italic; opacity:0.6;">Loading wishes...</p>
+                </div>
+            </div>
+
+        </div> <!-- Ini penutup info-section -->
+    </div> <!-- Ini penutup main-content -->
+                
+    <!-- === RSVP MODAL (POP-UP) === -->
+    <div id="rsvpModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeRSVP()">&times;</span>
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--accent-rose); margin-bottom: 20px;">RSVP</h2>
+            
+            <form id="rsvpForm" onsubmit="submitRSVP(event)">
+                <input type="text" id="guestName" placeholder="Your Full Name" required>
+                
+                <label>Will you be attending?</label>
+                <select id="guestAttending" required>
+                    <option value="Yes">Yes, I will attend</option>
+                    <option value="No">No, I cannot attend</option>
+                </select>
+
+                <label>Bringing a partner?</label>
+                <select id="guestPartner" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Bringing family?</label>
+                <select id="guestFamily" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <button type="submit" id="rsvpSubmitBtn" class="btn-action btn-rsvp" style="width: 100%; margin-top: 15px;">Submit RSVP</button>
+            </form>
+            <div id="rsvpMessage" style="margin-top: 15px; text-align: center; font-weight: bold;"></div>
+        </div>
+    </div>
+
+    <!-- === WISH MODAL (POP-UP) === -->
+    <div id="wishModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeWish()">&times;</span>
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--accent-rose); margin-bottom: 20px;">Leave a Wish</h2>
+            <p style="font-size: 0.8rem; margin-bottom: 15px; color: var(--text-sub);">Your message will be shared privately with the couple.</p>
+            
+            <form id="wishForm" onsubmit="submitWish(event)">
+                <input type="text" id="wishName" placeholder="Your Name" required>
+                <textarea id="wishText" placeholder="Write your wishes here..." rows="4" required></textarea>
+
+                <button type="submit" id="wishSubmitBtn" class="btn-action btn-maps" style="width: 100%; border: 1px solid var(--accent-rose); color: var(--accent-rose);">Send Wish</button>
+            </form>
+            <div id="wishMessage" style="margin-top: 15px; text-align: center; font-weight: bold;"></div>
+        </div>
+    </div>
+
+    <!-- === GUIDE MODAL (POP-UP) === -->
+    <div id="guideModal" class="modal-overlay">
+        <div class="modal-content guide-content">
+            <span class="close-btn" onclick="closeGuide()">&times;</span>
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--accent-rose); margin-bottom: 15px;">Client Guide</h2>
+            
+            <p><strong>Welcome!</strong> This guide shows you how to manage your guest list and wishes in your Google Sheet.</p>
+            
+            <h3>📋 TAB 1: RSVP (Guest List)</h3>
+            <p>Every guest who RSVPs through the card appears here automatically.</p>
+            <ul>
+                <li><strong>How to add a guest manually (physical card):</strong><br>
+                Scroll to the first empty row at the bottom. Type their <strong>Name</strong>, choose <strong>Yes/No</strong> for the dropdowns, and choose <strong>Manual</strong> for Source.</li>
+                <li><strong>How to edit:</strong> Click the cell, type the new value, press Enter.</li>
+                <li><strong>How to delete:</strong> Right-click the row number on the left, click <strong>Delete row</strong>.</li>
+            </ul>
+
+            <h3>💌 TAB 2: Wishes</h3>
+            <p>Every wish from your guests appears here. <strong>This is private</strong> — only you can see it.</p>
+            <ul>
+                <li><strong>How to review a wish:</strong><br>
+                Read the <strong>Wish</strong> column. Click the <strong>Status</strong> cell and choose from the dropdown:</li>
+                <li><code>Pending</code> — Not reviewed yet.</li>
+                <li><code>Approved</code> — Clean, keep it.</li>
+                <li><code>Rejected</code> — Inappropriate, marked.</li>
+                <li><strong>How to delete:</strong> Right-click the row number, click <strong>Delete row</strong>.</li>
+            </ul>
+
+            <h3>⚠️ IMPORTANT</h3>
+            <p>Do <strong>NOT</strong> delete the header row (Row 1) or change the column names. Do not touch the first empty row where new RSVPs land.</p>
+            
+            <button class="btn-action btn-rsvp" onclick="closeGuide()" style="margin-top: 15px;">Close Guide</button>
         </div>
     </div>
 
     <script>
-        let audioCtx, isAudioPlaying = false, loopInterval;
-        let autoScrollActive = false, scrollSpeed = 0.6; // Cinematic slower scroll
+        // --- MAIN LOGIC ---
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylZiD_zidYkL5D7smLHpWTMrGVjmrarY3Vk5lxkrDBIecK3ikscvFl1C3tTKfCHFaS/exec';
 
-        // --- CONFETTI LOGIC ---
-        const confettiCanvas = document.getElementById('confetti-canvas');
-        const confettiCtx = confettiCanvas.getContext('2d');
-        let confettiParticles = [];
-        let confettiActive = false;
-
-        function resizeConfetti() {
-            confettiCanvas.width = window.innerWidth;
-            confettiCanvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeConfetti);
-        resizeConfetti();
-
-        function triggerConfetti() {
-            confettiActive = true;
-            confettiParticles = [];
-            const colors = ['#D4AF37', '#FFDF00', '#FFF8DC', '#5C1A2E']; // Gold, Maroon, Ivory
-            
-            for (let i = 0; i < 150; i++) {
-                confettiParticles.push({
-                    x: window.innerWidth / 2,
-                    y: window.innerHeight / 2,
-                    w: Math.random() * 10 + 5,
-                    h: Math.random() * 10 + 5,
-                    vx: (Math.random() - 0.5) * 20,
-                    vy: (Math.random() - 0.5) * 20 - 5,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    rotation: Math.random() * Math.PI * 2,
-                    rotationSpeed: (Math.random() - 0.5) * 0.2,
-                    opacity: 1
-                });
-            }
-            animateConfetti();
-        }
-
-        function animateConfetti() {
-            if (!confettiActive) return;
-            confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-            let activeParticles = 0;
-
-            confettiParticles.forEach(p => {
-                if (p.opacity <= 0) return;
-                activeParticles++;
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.5; // Gravity
-                p.vx *= 0.98; // Drag
-                p.opacity -= 0.015;
-                p.rotation += p.rotationSpeed;
-
-                confettiCtx.save();
-                confettiCtx.translate(p.x, p.y);
-                confettiCtx.rotate(p.rotation);
-                confettiCtx.globalAlpha = p.opacity;
-                confettiCtx.fillStyle = p.color;
-                confettiCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-                confettiCtx.restore();
-            });
-
-            if (activeParticles > 0) {
-                requestAnimationFrame(animateConfetti);
-            } else {
-                confettiActive = false;
-                confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-            }
-        }
+        let audioCtx = null, masterGain = null, delayNode = null, feedbackGain = null;
+        let isAudioPlaying = false;
+        let loopTimer = null;
 
         function openInvitation() {
-            triggerConfetti(); // Letupkan confetti
             document.getElementById('splash').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('splash').style.display = 'none';
                 document.getElementById('main-content').style.opacity = '1';
                 document.getElementById('main-content').style.visibility = 'visible';
-                initGoldDust();
-                playLoopAudio();
-                setTimeout(startAutoScroll, 2500);
+                initParticles();
+                playLoopAudio(); // Mula muzik nasheed automatik
+                startAutoScroll(); // Mula auto-scroll
+                loadWishes(); // <-- TAMBAH BARIS NI
             }, 800);
         }
+
+        // --- AUTO SCROLL LOGIC ---
+        let autoScrollActive = false, scrollSpeed = 0.8; 
 
         function startAutoScroll() {
             autoScrollActive = true;
@@ -354,6 +384,7 @@
             requestAnimationFrame(scrollStep);
         }
 
+        // Hentikan auto-scroll bila tetamu sentuh skrin / scroll sendiri
         ['mousedown', 'wheel', 'touchstart'].forEach(evt => {
             window.addEventListener(evt, () => { autoScrollActive = false; }, { passive: true });
         });
@@ -364,7 +395,6 @@
             btn.innerHTML = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
         }
 
-        // --- FLIP & TILT 3D (Dengan kesan GOLD GLARE) ---
         const card = document.getElementById('card');
         let isFlipped = false;
 
@@ -372,7 +402,7 @@
             if(event) event.stopPropagation();
             isFlipped = !isFlipped;
             card.classList.toggle('flipped');
-            card.style.transform = ''; // Reset tilt
+            card.style.transform = ''; 
         }
 
         document.getElementById('scene').addEventListener('mousemove', (e) => {
@@ -391,8 +421,7 @@
             setTimeout(() => card.style.transition = 'transform 0.8s ease-in-out', 500);
         });
 
-        // --- COUNTDOWN ---
-        const targetDate = new Date("February 29, 2027 12:00:00").getTime();
+        const targetDate = new Date("November 22, 2026 17:30:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const distance = targetDate - now;
@@ -403,124 +432,321 @@
             document.getElementById("secs").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // --- AUDIO ---
-        function playLoopAudio() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            isAudioPlaying = true;
-            document.getElementById('audioBtn').innerHTML = '🔊';
+        // ============================================================
+        //  NASHEED AUDIO ENGINE (MAQAM BAYATI LOOP)
+        // ============================================================
+        const NOTE = {
+            D3: 146.83, Eb3: 155.56, F3: 174.61, G3: 196.00, A3: 220.00,
+            Bb3: 233.08, C4: 261.63, D4: 293.66, Eb4: 311.13, F4: 349.23,
+            G4: 392.00, A4: 440.00, Bb4: 466.16, C5: 523.25, D5: 587.33,
+            Eb5: 622.25, F5: 698.46, G5: 783.99
+        };
 
-            const masterGain = audioCtx.createGain();
-            masterGain.connect(audioCtx.destination);
-            masterGain.gain.setValueAtTime(0.2, audioCtx.currentTime); 
+        const MELODY = [
+            ['D4', 1], ['Eb4', 0.5], ['F4', 0.5], ['G4', 1], ['A4', 1],
+            ['G4', 0.5], ['F4', 0.5], ['Eb4', 1], ['D4', 2],
+            ['D4', 1], ['Eb4', 0.5], ['F4', 0.5], ['G4', 1], ['A4', 0.5], ['Bb4', 0.5],
+            ['A4', 1], ['G4', 1], ['F4', 1], ['D4', 2],
+            ['F4', 1], ['G4', 0.5], ['A4', 0.5], ['Bb4', 1], ['C5', 1],
+            ['Bb4', 0.5], ['A4', 0.5], ['G4', 1], ['F4', 1], ['D4', 2],
+            ['A4', 1], ['G4', 0.5], ['F4', 0.5], ['Eb4', 1], ['D4', 1],
+            ['Eb4', 0.5], ['F4', 0.5], ['G4', 1], ['D4', 2]
+        ];
 
-            const notesD = [293.66, 369.99, 440.00, 587.33];
-            const notesA = [220.00, 277.18, 329.63, 440.00];
-            const notesBm = [246.94, 293.66, 369.99, 493.88];
-            const notesG = [196.00, 246.94, 293.66, 392.00];
+        const CHORDS = [
+            ['D3', 'A3'], ['D3', 'A3'], ['G3', 'D4'], ['G3', 'D4'],
+            ['D3', 'A3'], ['D3', 'A3'], ['F3', 'C4'], ['D3', 'A3'],
+            ['F3', 'C4'], ['Bb3', 'F4'], ['G3', 'D4'], ['D3', 'A3'],
+            ['A3', 'Eb4'], ['D3', 'A3'], ['G3', 'D4'], ['D3', 'A3']
+        ];
 
-            let loopStep = 0;
-            function playNextSequence() {
-                if (!isAudioPlaying) return;
-                let time = audioCtx.currentTime;
-                let seq1 = (loopStep % 2 === 0) ? notesD : notesA;
-                let seq2 = (loopStep % 2 === 0) ? notesBm : notesG;
-                seq1.forEach(freq => { playTone(freq, time, 1.2, masterGain); time += 0.3; });
-                seq2.forEach(freq => { playTone(freq, time, 1.2, masterGain); time += 0.3; });
-                loopStep++;
+        const BPM = 100;
+        const BEAT = 60 / BPM;
+        const MELODY_DURATION = MELODY.reduce((s, [, b]) => s + b, 0) * BEAT;
+        const LOOP_GAP = 2.0; 
+
+        function initAudioEngine() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            } else if (masterGain) {
+                masterGain.disconnect(); // <-- TAMBAH BARIS NI (Putuskan sambungan enjin lama)
             }
-            playNextSequence(); 
-            loopInterval = setInterval(playNextSequence, 2400); 
+            
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            masterGain = audioCtx.createGain();
+            masterGain.gain.value = 0.18;
+            masterGain.connect(audioCtx.destination);
+
+            delayNode = audioCtx.createDelay(1.0);
+            delayNode.delayTime.value = BEAT * 0.75;
+            feedbackGain = audioCtx.createGain();
+            feedbackGain.gain.value = 0.28;
+            delayNode.connect(feedbackGain);
+            feedbackGain.connect(delayNode);
+            delayNode.connect(masterGain);
         }
 
-        function playTone(freq, startTime, duration, masterGain) {
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.type = 'triangle'; 
-            osc.frequency.setValueAtTime(freq, startTime);
-            gainNode.gain.setValueAtTime(0, startTime);
-            gainNode.gain.linearRampToValueAtTime(0.6, startTime + 0.02);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-            osc.connect(gainNode);
-            gainNode.connect(masterGain);
-            osc.start(startTime);
-            osc.stop(startTime + duration);
+        function playNote(freq, startTime, duration, gainScale = 1) {
+            const t = startTime, end = t + duration;
+            const osc1 = audioCtx.createOscillator();
+            osc1.type = 'triangle'; osc1.frequency.value = freq;
+            const osc2 = audioCtx.createOscillator();
+            osc2.type = 'sine'; osc2.frequency.value = freq * 2;
+            const g1 = audioCtx.createGain(); const g2 = audioCtx.createGain();
+
+            g1.gain.setValueAtTime(0, t);
+            g1.gain.linearRampToValueAtTime(0.75 * gainScale, t + 0.008);
+            g1.gain.exponentialRampToValueAtTime(0.001, end);
+            g2.gain.setValueAtTime(0, t);
+            g2.gain.linearRampToValueAtTime(0.18 * gainScale, t + 0.008);
+            g2.gain.exponentialRampToValueAtTime(0.001, end);
+
+            osc1.connect(g1); osc2.connect(g2);
+            g1.connect(masterGain); g1.connect(delayNode);
+            g2.connect(masterGain); g2.connect(delayNode);
+            osc1.start(t); osc1.stop(end); osc2.start(t); osc2.stop(end);
+        }
+
+        function playPad(rootFreq, fifthFreq, startTime, duration, gainScale = 1) {
+            const t = startTime, end = t + duration;
+            const g = audioCtx.createGain();
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(0.08 * gainScale, t + duration * 0.3);
+            g.gain.linearRampToValueAtTime(0, end);
+            g.connect(masterGain);
+            [rootFreq, fifthFreq].forEach(f => {
+                const o = audioCtx.createOscillator();
+                o.type = 'sine'; o.frequency.value = f;
+                o.connect(g); o.start(t); o.stop(end);
+            });
+        }
+
+        function playCycle(startTime) {
+            let time = startTime, elapsed = 0;
+            CHORDS.forEach((ch, i) => {
+                playPad(NOTE[ch[0]], NOTE[ch[1]], startTime + i * 4 * BEAT, 4 * BEAT);
+            });
+            for (const [noteName, beats] of MELODY) {
+                if (!isAudioPlaying) return;
+                const freq = NOTE[noteName];
+                const dur = beats * BEAT * 0.9;
+                let gainScale = 1;
+                if (elapsed < 3 * BEAT) gainScale = 0.3 + (elapsed / (3 * BEAT)) * 0.7;
+                else if (elapsed > MELODY_DURATION - 3 * BEAT) gainScale = 0.3 + ((MELODY_DURATION - elapsed) / (3 * BEAT)) * 0.7;
+                playNote(freq, time, dur, gainScale);
+                time += beats * BEAT; elapsed += beats * BEAT;
+            }
+        }
+
+        function playLoopAudio() {
+            initAudioEngine();
+            isAudioPlaying = true;
+            document.getElementById('audioBtn').innerHTML = '🔊';
+            
+            const runLoop = () => {
+                if (!isAudioPlaying) return;
+                const cycleStart = audioCtx.currentTime + 0.1;
+                playCycle(cycleStart);
+                loopTimer = setTimeout(runLoop, (MELODY_DURATION + LOOP_GAP) * 1000);
+            };
+            runLoop();
         }
 
         function toggleAudio() {
             if (isAudioPlaying) {
-                clearInterval(loopInterval); audioCtx.suspend();
-                isAudioPlaying = false; document.getElementById('audioBtn').innerHTML = '🔇';
+                // MATIKAN BUNYI (Mute)
+                isAudioPlaying = false;
+                if (loopTimer) clearTimeout(loopTimer);
+                if (masterGain && audioCtx) {
+                    // Serta-merta set volume ke 0 (terus senyap)
+                    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+                    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+                }
+                document.getElementById('audioBtn').innerHTML = '🔇';
             } else {
-                if (audioCtx && audioCtx.state === 'suspended') {
-                    audioCtx.resume(); isAudioPlaying = true;
+                // HIDUPKAN BUNYI (Play)
+                if (masterGain && audioCtx) {
+                    // Hidupkan balik volume asal
+                    masterGain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+                    isAudioPlaying = true;
                     document.getElementById('audioBtn').innerHTML = '🔊';
+                    
+                    // Start loop balik (kalau loop timer dah mati tadi)
+                    if (!loopTimer) {
+                        const runLoop = () => {
+                            if (!isAudioPlaying) return;
+                            const cycleStart = audioCtx.currentTime + 0.1;
+                            playCycle(cycleStart);
+                            loopTimer = setTimeout(runLoop, (MELODY_DURATION + LOOP_GAP) * 1000);
+                        };
+                        runLoop();
+                    }
+                } else {
                     playLoopAudio();
-                } else { playLoopAudio(); }
+                }
             }
         }
 
         // --- ICS ---
         function downloadICS() {
-            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Teruna&Dara-Deluxe//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20270229T040000Z\nDTEND:20270228T160000Z\nSUMMARY:Wedding of Teruna & Dara\nLOCATION:AR RAYYAN RESTAURANT, Blk 253 Choa Chu Kang Ave 1, #01-21, Singapore 680253\nDESCRIPTION:Majlis perkahwinan Teruna & Dara di AR RAYYAN RESTAURANT.\nEND:VEVENT\nEND:VCALENDAR`;
+            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//S&H Wedding//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20261122T093000Z\nDTEND:20261122T133000Z\nSUMMARY:Wedding of Syahiran & Nurhidayah\nLOCATION:The Iris, 810 Geylang Road, City Plaza, #04-28/37 Singapore 409286\nDESCRIPTION:Together with their families, we invite you to join the wedding celebration.\nEND:VEVENT\nEND:VCALENDAR`;
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = 'Teruna_Dara_Deluxe_Wedding.ics';
+            link.download = 'S_H_Wedding.ics';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        // --- GOLD DUST PARTICLES ---
-        function initGoldDust() {
+        // --- PARTICLES ---
+        function initParticles() {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             document.getElementById('particles-js').appendChild(canvas);
-            let width, height, dust = [];
+            let width, height, petals = [];
             function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
             window.addEventListener('resize', resize); resize();
 
-            class Dust {
+            class Petal {
                 constructor() {
-                    this.x = Math.random() * width; 
-                    this.y = Math.random() * height;
-                    this.size = Math.random() * 2.5 + 1; // Habuk kecil
-                    this.speedX = Math.random() * 1 - 0.5; // Gerak perlahan
-                    this.speedY = Math.random() * -1 - 0.5; // Terbang ke atas
-                    this.opacity = Math.random() * 0.7 + 0.3;
-                    this.flicker = Math.random() * 0.05;
+                    this.x = Math.random() * width; this.y = Math.random() * height - height;
+                    this.size = Math.random() * 5 + 5; this.speedY = Math.random() * 1.5 + 0.5; 
+                    this.opacity = Math.random() * 0.5 + 0.3; this.angle = Math.random() * Math.PI * 2;
                 }
                 update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    // Reset bila keluar skrin
-                    if (this.y < -10) { this.y = height + 10; this.x = Math.random() * width; }
-                    if (this.x < -10) this.x = width + 10;
-                    if (this.x > width + 10) this.x = -10;
-                    
-                    // Kesan berkelip (flicker)
-                    this.opacity += (Math.random() - 0.5) * 0.05;
-                    if(this.opacity < 0.2) this.opacity = 0.2;
-                    if(this.opacity > 1) this.opacity = 1;
+                    this.y += this.speedY; this.x += Math.sin(this.angle) * 0.8; this.angle += 0.02;
+                    if (this.y > height) { this.y = -10; this.x = Math.random() * width; }
                 }
                 draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`; // Warna Emas
-                    ctx.fill();
-                    // Glow effect
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = "rgba(212, 175, 55, 0.8)";
+                    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.angle); ctx.beginPath();
+                    ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(183, 110, 121, ${this.opacity})`; ctx.fill(); ctx.restore();
                 }
             }
-            for (let i = 0; i < 80; i++) dust.push(new Dust());
+            for (let i = 0; i < 50; i++) petals.push(new Petal());
             function animate() {
                 ctx.clearRect(0, 0, width, height);
-                dust.forEach(d => { d.update(); d.draw(); });
+                petals.forEach(p => { p.update(); p.draw(); });
                 requestAnimationFrame(animate);
             }
             animate();
+        }
+
+        // --- RSVP LOGIC ---
+        function openRSVP() { document.getElementById('rsvpModal').classList.add('active'); }
+        function closeRSVP() {
+            document.getElementById('rsvpModal').classList.remove('active');
+            document.getElementById('rsvpMessage').innerHTML = '';
+            document.getElementById('rsvpForm').reset();
+        }
+
+        async function submitRSVP(e) {
+            e.preventDefault();
+            const btn = document.getElementById('rsvpSubmitBtn');
+            const msg = document.getElementById('rsvpMessage');
+            btn.innerText = 'Submitting...';
+            msg.innerHTML = '';
+
+            const data = {
+                type: 'rsvp',
+                name: document.getElementById('guestName').value,
+                attending: document.getElementById('guestAttending').value,
+                partner: document.getElementById('guestPartner').value,
+                withFamily: document.getElementById('guestFamily').value
+            };
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(data)
+                });
+                const json = await response.json();
+
+                if (json.status === 'ok') {
+                    msg.innerHTML = '✅ <span style="color: green;">Thank you! Your RSVP has been received.</span>';
+                    setTimeout(closeRSVP, 3000);
+                } else {
+                    msg.innerHTML = '❌ <span style="color: red;">Error: ' + json.message + '</span>';
+                }
+            } catch (error) {
+                msg.innerHTML = '❌ <span style="color: red;">Network error. Please try again.</span>';
+            }
+            btn.innerText = 'Submit RSVP';
+        }
+
+        // --- WISH LOGIC ---
+        function openWish() { document.getElementById('wishModal').classList.add('active'); }
+        function closeWish() {
+            document.getElementById('wishModal').classList.remove('active');
+            document.getElementById('wishMessage').innerHTML = '';
+            document.getElementById('wishForm').reset();
+        }
+
+        async function submitWish(e) {
+            e.preventDefault();
+            const btn = document.getElementById('wishSubmitBtn');
+            const msg = document.getElementById('wishMessage');
+            btn.innerText = 'Sending...';
+            msg.innerHTML = '';
+
+            const data = {
+                type: 'wish',
+                name: document.getElementById('wishName').value,
+                wish: document.getElementById('wishText').value
+            };
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(data)
+                });
+                const json = await response.json();
+
+                if (json.status === 'ok') {
+                    msg.innerHTML = '✅ <span style="color: green;">Thank you! Your wish has been sent to the couple.</span>';
+                    setTimeout(closeWish, 3000);
+                } else {
+                    msg.innerHTML = '❌ <span style="color: red;">Error: ' + json.message + '</span>';
+                }
+            } catch (error) {
+                msg.innerHTML = '❌ <span style="color: red;">Network error. Please try again.</span>';
+            }
+            btn.innerText = 'Send Wish';
+        }
+
+        // --- GUIDE LOGIC ---
+        function openGuide() { document.getElementById('guideModal').classList.add('active'); }
+        function closeGuide() { document.getElementById('guideModal').classList.remove('active'); }
+            // --- WISH BOARD LOGIC ---
+        async function loadWishes() {
+            try {
+                const response = await fetch(SCRIPT_URL, { method: 'GET' }); // Guna GET
+                const wishes = await response.json();
+                const list = document.getElementById('wishesList');
+
+                if (wishes.length === 0) {
+                    list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">No wishes yet. Be the first!</p>';
+                    return;
+                }
+
+                // Susun semula ikut terbaru (terbalikkan array)
+                wishes.reverse();
+
+                list.innerHTML = wishes.map(w => `
+                    <div class="wish-card">
+                        <strong>${w.name}</strong>
+                        ${w.wish}
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading wishes:', error);
+                document.getElementById('wishesList').innerHTML = '<p style="text-align:center; color:red;">Error loading wishes.</p>';
+            }
         }
     </script>
 </body>
