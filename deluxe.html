@@ -8,15 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         /* --- VARIABLES & THEME --- */
-        :root {
-            --bg-color: #F9F6F0; 
-            --text-main: #3A4A3F; 
-            --text-sub: #6B705C;
-            --accent-rose: #B76E79; 
-            --accent-gold: #C5A880;
-            --card-bg: #FFFFFF;
-            --shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
+    :root {
+    --bg-color: #FDF8F3; /* Warna background asal Teruna */
+    --text-main: #3B151A; /* Dark Maroon */
+    --text-sub: #6A3B42; 
+    --accent-rose: #5C1A2E; /* Maroon gelap untuk butang */
+    --accent-gold: #D4AF37; /* Bright Gold */
+    --card-bg: #FFFFFF;
+    --shadow: 0 20px 50px rgba(92, 26, 46, 0.2); /* Shadow warna maroon */
+    }
 
         body.dark-mode {
             --bg-color: #1A1D1A; 
@@ -110,8 +110,8 @@
             background-position: center; background-repeat: no-repeat;
             border: 5px solid var(--card-bg); background-color: #333;
         }
-        .card-front { background-image: url('depan.jpg'); transform: rotateY(0deg); }
-        .card-back { background-image: url('belakang.jpg'); transform: rotateY(180deg); }
+        .card-front { background-image: url('teruna-deluxe-depan.jpg'); transform: rotateY(0deg); }
+        .card-back { background-image: url('teruna-deluxe-belakang.jpg'); transform: rotateY(180deg); }
 
         /* --- TEXT & BUTTONS SECTION --- */
         .info-section { text-align: center; max-width: 350px; margin-bottom: 50px; padding-top: 20px; }
@@ -195,7 +195,7 @@
 <body>
 
     <div id="splash">
-        <h1>Syahiran & Nurhidayah</h1>
+        <h1>  Teruna & Dara</h1>
         <p style="margin-bottom: 30px; font-size: 0.9rem; letter-spacing: 2px;">22 . 11 . 2026</p>
         <button class="btn-open" onclick="openInvitation()">Tap to Open 💌</button>
     </div>
@@ -219,7 +219,7 @@
         </div>
 
         <div class="info-section" id="details">
-            <div class="names">Syahiran & Nurhidayah</div>
+            <div class="names">  Teruna & Dara</div>
             
             <div class="date-container">
                 <div class="day-text">Sunday</div>
@@ -421,7 +421,7 @@
             setTimeout(() => card.style.transition = 'transform 0.8s ease-in-out', 500);
         });
 
-        const targetDate = new Date("November 22, 2026 17:30:00").getTime();
+        const targetDate = new Date("March 01, 2027 11:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const distance = targetDate - now;
@@ -590,7 +590,7 @@
 
         // --- ICS ---
         function downloadICS() {
-            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//S&H Wedding//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20261122T093000Z\nDTEND:20261122T133000Z\nSUMMARY:Wedding of Syahiran & Nurhidayah\nLOCATION:The Iris, 810 Geylang Road, City Plaza, #04-28/37 Singapore 409286\nDESCRIPTION:Together with their families, we invite you to join the wedding celebration.\nEND:VEVENT\nEND:VCALENDAR`;
+            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//S&H Wedding//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20261122T093000Z\nDTEND:20261122T133000Z\nSUMMARY:Wedding of   Teruna & Dara\nLOCATION:The Iris, 810 Geylang Road, City Plaza, #04-28/37 Singapore 409286\nDESCRIPTION:Together with their families, we invite you to join the wedding celebration.\nEND:VEVENT\nEND:VCALENDAR`;
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
