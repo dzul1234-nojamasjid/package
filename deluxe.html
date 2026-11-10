@@ -9,21 +9,21 @@
     <style>
         /* --- VARIABLES & THEME --- */
     :root {
-    --bg-color: #FDF8F3; /* Warna background asal Teruna */
-    --text-main: #3B151A; /* Dark Maroon */
+    --bg-color: #FDF8F3; 
+    --text-main: #3B151A; 
     --text-sub: #6A3B42; 
-    --accent-rose: #5C1A2E; /* Maroon gelap untuk butang */
-    --accent-gold: #D4AF37; /* Bright Gold */
+    --accent-rose: #5C1A2E; 
+    --accent-gold: #D4AF37; 
     --card-bg: #FFFFFF;
-    --shadow: 0 20px 50px rgba(92, 26, 46, 0.2); /* Shadow warna maroon */
+    --shadow: 0 20px 50px rgba(92, 26, 46, 0.2); 
     }
 
     body.dark-mode {
-    --bg-color: #121413; /* Latar belakang gelap sikit */
-    --text-main: #FDF8F3; /* Tulisan putih cair */
+    --bg-color: #121413; 
+    --text-main: #FDF8F3; 
     --text-sub: #BFA5A9; 
-    --accent-rose: #E07A8D; /* Maroon cerah/rose supaya nampak jelas */
-    --accent-gold: #F3C43A; /* Gold terang */
+    --accent-rose: #E07A8D; 
+    --accent-gold: #F3C43A; 
     --card-bg: #1F2321;
     --shadow: 0 20px 50px rgba(0,0,0,0.8);
     }
@@ -210,7 +210,6 @@
         .wish-card strong { color: var(--accent-rose); display: block; margin-bottom: 3px; }    
         </style>
 </head>
-<!-- KITA TAMBAH CLASS DARK-MODE DI SINI -->
 <body class="dark-mode">
 
     <div id="splash">
@@ -222,7 +221,6 @@
     <div id="particles-js"></div>
 
     <div id="main-content">
-        <!-- Butang Panduan (Untuk Client) -->
         <button class="control-btn" onclick="openGuide()" title="Client Guide" style="position: fixed; top: 15px; left: 15px; z-index: 100;">❓</button>
         
         <div class="top-controls">
@@ -231,7 +229,6 @@
         </div>
 
         <div class="scene" id="scene">
-            <!-- SAYA DAH LETAK CLASS CARD-CONTAINER DI SINI -->
             <div class="card-container" id="card" onclick="flipCard(event)">
                 <div class="card-face card-front">
                     <div class="card-glare"></div>
@@ -259,7 +256,7 @@
             </div>
 
             <div class="action-buttons">
-                                <button onclick="openRSVP()" class="btn-action btn-rsvp">
+                <button onclick="openRSVP()" class="btn-action btn-rsvp">
                     💌 RSVP Now
                 </button>
                 <button onclick="openWish()" class="btn-action btn-calendar">
@@ -277,15 +274,14 @@
             <div class="wish-board" id="wishBoard">
                 <h3 class="wish-title">Wishes from Loved Ones</h3>
                 <div id="wishesList" class="wishes-list">
-                    <!-- Ucapan akan keluar di sini secara automatik -->
                     <p style="text-align:center; font-style:italic; opacity:0.6;">Loading wishes...</p>
                 </div>
             </div>
 
-        </div> <!-- Ini penutup info-section -->
-    </div> <!-- Ini penutup main-content -->
+        </div>
+    </div>
                 
-    <!-- === RSVP MODAL (POP-UP) === -->
+    <!-- === RSVP MODAL === -->
     <div id="rsvpModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="closeRSVP()">&times;</span>
@@ -318,7 +314,7 @@
         </div>
     </div>
 
-    <!-- === WISH MODAL (POP-UP) === -->
+    <!-- === WISH MODAL === -->
     <div id="wishModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="closeWish()">&times;</span>
@@ -335,7 +331,7 @@
         </div>
     </div>
 
-    <!-- === GUIDE MODAL (POP-UP) === -->
+    <!-- === GUIDE MODAL === -->
     <div id="guideModal" class="modal-overlay">
         <div class="modal-content guide-content">
             <span class="close-btn" onclick="closeGuide()">&times;</span>
@@ -385,10 +381,10 @@
                 document.getElementById('main-content').style.opacity = '1';
                 document.getElementById('main-content').style.visibility = 'visible';
                 initParticles();
-                playLoopAudio(); // Mula muzik nasheed automatik
-                startAutoScroll(); // Mula auto-scroll
-                loadWishes(); // Load ucapan
-                autoRotate(); // <--- TAMBAH BARIS NI
+                playLoopAudio(); 
+                startAutoScroll(); 
+                loadWishes(); 
+                autoRotate(); 
             }, 800);
         }
 
@@ -410,7 +406,6 @@
             requestAnimationFrame(scrollStep);
         }
 
-        // Hentikan auto-scroll bila tetamu sentuh skrin / scroll sendiri
         ['mousedown', 'wheel', 'touchstart'].forEach(evt => {
             window.addEventListener(evt, () => { autoScrollActive = false; }, { passive: true });
         });
@@ -421,29 +416,25 @@
             btn.innerHTML = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
         }
 
-                const card = document.getElementById('card');
+        const card = document.getElementById('card');
         let isFlipped = false;
         
         // --- AUTO ROTATE LOGIC ---
         let currentAngle = 0;
-        let rotateSpeed = 0.5; // Laju pusingan. Besarkan nombor kalau nak laju (cth: 0.5)
+        let rotateSpeed = 0.5; 
         let isAutoRotating = true;
         let animationFrameId;
 
         function autoRotate() {
             if (!isAutoRotating) return;
-            
             currentAngle += rotateSpeed;
-            // Jangan pusing kalau kad tengah 3D hover (untuk elak jadi pelik)
             if (!isFlipped && !card.classList.contains('hovered-3d')) {
                 card.style.transform = `rotateY(${currentAngle}deg)`;
             }
-            
             animationFrameId = requestAnimationFrame(autoRotate);
         }
 
-        // Mula pusing bila skrin dibuka
-        setTimeout(() => { autoRotate(); }, 1500); // Tunggu 1.5 saat baru mula pusing
+        setTimeout(() => { autoRotate(); }, 1500);
 
         function stopAutoRotate() {
             isAutoRotating = false;
@@ -452,11 +443,10 @@
 
         function flipCard(event) {
             if(event) event.stopPropagation();
-            stopAutoRotate(); // Berhenti pusing bila diklik
+            stopAutoRotate(); 
             isFlipped = !isFlipped;
             card.classList.toggle('flipped');
             
-            // Kira semula posisi rotate supaya tak 'lompat' bila diklik
             if (isFlipped) {
                 card.style.transform = `rotateY(180deg)`;
             } else {
@@ -465,12 +455,11 @@
             }
         }
 
-                document.getElementById('scene').addEventListener('mouseenter', () => {
-            // Bila mouse masuk, berhenti pusing
+        document.getElementById('scene').addEventListener('mouseenter', () => {
             if (!isFlipped) {
                 stopAutoRotate();
                 card.classList.add('hovered-3d');
-                card.style.transition = 'transform 0.5s ease'; // Tambah smooth transition
+                card.style.transition = 'transform 0.5s ease'; 
             }
         });
 
@@ -485,21 +474,12 @@
             card.classList.remove('hovered-3d');
             if(isFlipped) return;
             
-            // Bila mouse keluar, sambung pusing balik
             card.style.transition = 'transform 0.8s ease-in-out';
             card.style.transform = `rotateY(${currentAngle}deg)`;
             isAutoRotating = true;
             autoRotate();
         });
 
-        document.getElementById('scene').addEventListener('mouseleave', () => {
-            if(isFlipped) return;
-            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
-            card.style.transition = 'transform 0.5s ease';
-            setTimeout(() => card.style.transition = 'transform 0.8s ease-in-out', 500);
-        });
-
-        // TARIKH DAH DIBETULKAN DI SINI
         const targetDate = new Date("January 01, 2027 07:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -662,7 +642,7 @@
             }
         }
 
-        // --- ICS (DAH DIBETULKAN NAMA DAN KURUNGAN) ---
+        // --- ICS ---
         function downloadICS() {
             const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//S&H Wedding//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20261231T230000Z\nDTEND:20270101T155900Z\nSUMMARY:Wedding of Teruna \\& Dara\nLOCATION:AR RAYYAN RESTAURANT, Blk 253 Choa Chu Kang Ave 1, #01-21, Singapore 680253\nDESCRIPTION:Together with their families, we invite you to join the wedding celebration.\nEND:VEVENT\nEND:VCALENDAR`;
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
@@ -806,18 +786,18 @@
                 });
                 const json = await response.json();
 
-                // TUKAR BAHAGIAN INI
                 if (json.status === 'ok') {
                     msg.innerHTML = '✅ <span style="color: green;">Thank you! Your wish has been sent to the couple.</span>';
-                    document.getElementById('wishForm').reset(); // Kosongkan borang
+                    document.getElementById('wishForm').reset(); 
                     setTimeout(closeWish, 3000);
                 } else {
-                    // Tunjuk error sebenar jika gagal
                     msg.innerHTML = '❌ <span style="color: red;">Error: ' + json.message + '</span>';
                 }
             } catch (error) {
                 msg.innerHTML = '❌ <span style="color: red;">Network error. Please try again.</span>';
             }
+            btn.innerText = 'Send Wish';
+        } // <-- KURUNGAN YANG HILANG DAH DITUTUP DI SINI
 
         // --- GUIDE LOGIC ---
         function openGuide() { document.getElementById('guideModal').classList.add('active'); }
@@ -829,7 +809,6 @@
             list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">Loading wishes...</p>';
             
             try {
-                // Guna timestamp untuk pastikan takde cache
                 const url = SCRIPT_URL + '?action=getwishes&t=' + new Date().getTime();
                 const response = await fetch(url);
                 
@@ -838,14 +817,13 @@
                 }
                 
                 const wishes = await response.json();
-                console.log("Wishes loaded from sheet:", wishes); // Untuk debug
+                console.log("Wishes loaded from sheet:", wishes);
 
                 if (!wishes || wishes.length === 0) {
                     list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">No wishes yet. Be the first!</p>';
                     return;
                 }
 
-                // Terbalikkan supaya yang terbaru di atas
                 wishes.reverse();
 
                 let htmlContent = '';
