@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S & H Wedding Invitation</title>
+    <title>Teruna & Dara Wedding Invitation</title>
     <link rel="icon" href="data:,">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
@@ -114,7 +114,8 @@
         }
         .card-front { background-image: url('teruna-deluxe-depan.jpg'); transform: rotateY(0deg); }
         .card-back { background-image: url('teruna-deluxe-belakang.jpg'); transform: rotateY(180deg); }
-         /* Kesan Kilauan 3D */
+        
+        /* Kesan Kilauan 3D */
         .card-glare {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -128,6 +129,7 @@
         .card-container:hover .card-glare {
             background-position: 0% 0%;
         }
+        
         /* --- TEXT & BUTTONS SECTION --- */
         .info-section { text-align: center; max-width: 350px; margin-bottom: 50px; padding-top: 20px; }
         .names { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--accent-rose); margin-bottom: 5px; line-height: 1.1; }
@@ -185,10 +187,11 @@
         .guide-content li { margin-bottom: 5px; }
         .guide-content code { background: #eee; padding: 2px 4px; border-radius: 4px; color: #d63384; font-family: monospace; }
         body.dark-mode .guide-content code { background: #333; color: #ff99cc; }
-                /* --- WISH BOARD --- */
+        
+        /* --- WISH BOARD --- */
         .wish-board {
             width: 100%; margin-top: 40px; padding: 20px; 
-            margin-left: auto; margin-right: auto; /* <-- TAMBAH BARIS NI */
+            margin-left: auto; margin-right: auto;
             background: var(--card-bg); border-radius: 15px; 
             box-shadow: var(--shadow); text-align: center;
         }
@@ -207,10 +210,11 @@
         .wish-card strong { color: var(--accent-rose); display: block; margin-bottom: 3px; }    
         </style>
 </head>
-<body>
+<!-- KITA TAMBAH CLASS DARK-MODE DI SINI -->
+<body class="dark-mode">
 
     <div id="splash">
-        <h1>  Teruna & Dara</h1>
+        <h1>Teruna & Dara</h1>
         <p style="margin-bottom: 30px; font-size: 0.9rem; letter-spacing: 2px;">22 . 11 . 2026</p>
         <button class="btn-open" onclick="openInvitation()">Tap to Open 💌</button>
     </div>
@@ -227,18 +231,19 @@
         </div>
 
         <div class="scene" id="scene">
-        <div class="card-container" id="card" onclick="flipCard(event)">
-        <div class="card-face card-front">
-            <div class="card-glare"></div>
-        </div>
-        <div class="card-face card-back">
-            <div class="card-glare"></div>
+            <!-- SAYA DAH LETAK CLASS CARD-CONTAINER DI SINI -->
+            <div class="card-container" id="card" onclick="flipCard(event)">
+                <div class="card-face card-front">
+                    <div class="card-glare"></div>
+                </div>
+                <div class="card-face card-back">
+                    <div class="card-glare"></div>
+                </div>
             </div>
-          </div>
         </div>
 
         <div class="info-section" id="details">
-            <div class="names">  Teruna & Dara</div>
+            <div class="names">Teruna & Dara</div>
             
             <div class="date-container">
                 <div class="day-text">Sunday</div>
@@ -267,6 +272,7 @@
                     📅 Add to Calendar
                 </button>
             </div>
+            
             <!-- WISH BOARD SECTION -->
             <div class="wish-board" id="wishBoard">
                 <h3 class="wish-title">Wishes from Loved Ones</h3>
@@ -381,7 +387,7 @@
                 initParticles();
                 playLoopAudio(); // Mula muzik nasheed automatik
                 startAutoScroll(); // Mula auto-scroll
-                loadWishes(); // <-- TAMBAH BARIS NI
+                loadWishes(); // Load ucapan
             }, 800);
         }
 
@@ -440,7 +446,8 @@
             setTimeout(() => card.style.transition = 'transform 0.8s ease-in-out', 500);
         });
 
-        const targetDate = new Date("March 01, 2027 11:00").getTime();
+        // TARIKH DAH DIBETULKAN DI SINI
+        const targetDate = new Date("November 22, 2026 17:30:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const distance = targetDate - now;
@@ -488,7 +495,7 @@
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             } else if (masterGain) {
-                masterGain.disconnect(); // <-- TAMBAH BARIS NI (Putuskan sambungan enjin lama)
+                masterGain.disconnect();
             }
             
             if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -574,24 +581,19 @@
 
         function toggleAudio() {
             if (isAudioPlaying) {
-                // MATIKAN BUNYI (Mute)
                 isAudioPlaying = false;
                 if (loopTimer) clearTimeout(loopTimer);
                 if (masterGain && audioCtx) {
-                    // Serta-merta set volume ke 0 (terus senyap)
                     masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
                     masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
                 }
                 document.getElementById('audioBtn').innerHTML = '🔇';
             } else {
-                // HIDUPKAN BUNYI (Play)
                 if (masterGain && audioCtx) {
-                    // Hidupkan balik volume asal
                     masterGain.gain.setValueAtTime(0.18, audioCtx.currentTime);
                     isAudioPlaying = true;
                     document.getElementById('audioBtn').innerHTML = '🔊';
                     
-                    // Start loop balik (kalau loop timer dah mati tadi)
                     if (!loopTimer) {
                         const runLoop = () => {
                             if (!isAudioPlaying) return;
@@ -607,13 +609,13 @@
             }
         }
 
-        // --- ICS ---
+        // --- ICS (DAH DIBETULKAN NAMA DAN KURUNGAN) ---
         function downloadICS() {
-            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//S&H Wedding//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20261122T093000Z\nDTEND:20261122T133000Z\nSUMMARY:Wedding of   Teruna & Dara\nLOCATION:AR RAYYAN RESTAURANT, Blk 253 Choa Chu Kang Ave 1, #01-21, Singapore 680253\nDESCRIPTION:Together with their families, we invite you to join the wedding celebration.\nEND:VEVENT\nEND:VCALENDAR`;
+            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//S&H Wedding//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20261122T093000Z\nDTEND:20261122T133000Z\nSUMMARY:Wedding of Teruna \\& Dara\nLOCATION:AR RAYYAN RESTAURANT, Blk 253 Choa Chu Kang Ave 1, #01-21, Singapore 680253\nDESCRIPTION:Together with their families, we invite you to join the wedding celebration.\nEND:VEVENT\nEND:VCALENDAR`;
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = 'S_H_Wedding.ics';
+            link.download = 'Teruna_Dara_Wedding.ics';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -633,11 +635,11 @@
                 constructor() {
                     this.x = Math.random() * width; 
                     this.y = Math.random() * height - height;
-                    this.size = Math.random() * 4 + 2; // Saiz habuk emas
+                    this.size = Math.random() * 4 + 2; 
                     this.speedY = Math.random() * 1 + 0.5; 
                     this.speedX = Math.random() * 1 - 0.5;
                     this.opacity = Math.random() * 0.7 + 0.3; 
-                    this.isGold = Math.random() > 0.5; // 50% emas, 50% maroon
+                    this.isGold = Math.random() > 0.5; 
                     this.angle = Math.random() * Math.PI * 2;
                 }
                 update() {
@@ -656,15 +658,13 @@
                     ctx.beginPath();
                     
                     if (this.isGold) {
-                        // Kesan Gold Dust (bulat kecil bercahaya)
                         ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`; // Warna Gold
+                        ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`; 
                         ctx.shadowBlur = 10;
                         ctx.shadowColor = "rgba(212, 175, 55, 0.8)";
                     } else {
-                        // Kesan Confetti (segi empat/kepingan)
                         ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
-                        ctx.fillStyle = `rgba(92, 26, 46, ${this.opacity})`; // Warna Maroon
+                        ctx.fillStyle = `rgba(92, 26, 46, ${this.opacity})`; 
                     }
                     
                     ctx.fill(); 
@@ -768,10 +768,11 @@
         // --- GUIDE LOGIC ---
         function openGuide() { document.getElementById('guideModal').classList.add('active'); }
         function closeGuide() { document.getElementById('guideModal').classList.remove('active'); }
-            // --- WISH BOARD LOGIC ---
+            
+        // --- WISH BOARD LOGIC ---
         async function loadWishes() {
             try {
-                const response = await fetch(SCRIPT_URL + '?t=' + new Date().getTime(), { method: 'GET' }); // Guna GET
+                const response = await fetch(SCRIPT_URL + '?t=' + new Date().getTime(), { method: 'GET' });
                 const wishes = await response.json();
                 const list = document.getElementById('wishesList');
 
@@ -780,7 +781,6 @@
                     return;
                 }
 
-                // Susun semula ikut terbaru (terbalikkan array)
                 wishes.reverse();
 
                 list.innerHTML = wishes.map(w => `
