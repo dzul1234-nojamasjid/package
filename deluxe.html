@@ -237,14 +237,14 @@
             </div>
 
             <div class="action-buttons">
-                <button onclick="openRSVP()" class="btn-action btn-rsvp">
-                    💌 RSVP Now
-                </button>
+                <a href="https://wa.me/6591234567?text=Hello%20Pak%20Pandir,%20saya%20nak%20RSVP%20majlis%20Teruna%20%26%20Dara." target="_blank" class="btn-action btn-calendar">
+                💬 RSVP via WhatsApp
+                </a>
                 <button onclick="openWish()" class="btn-action btn-calendar">
                     ✨ Leave a Wish
                 </button>
-                <a href="https://maps.google.com/?q=The+Iris+810+Geylang+Road+City+Plaza+Singapore+409286" target="_blank" class="btn-action btn-maps">
-                    📍 View Location (The Iris)
+                <a href="https://maps.google.com/?q=AR+RAYYAN+RESTAURANT+Blk+253+Choa+Chu+Kang+Ave+1" target="_blank" class="btn-action btn-maps">
+               📍 View Location (AR RAYYAN)
                 </a>
                 <button onclick="downloadICS()" class="btn-action btn-calendar">
                     📅 Add to Calendar
@@ -592,7 +592,7 @@
 
         // --- ICS ---
         function downloadICS() {
-            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//S&H Wedding//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20261122T093000Z\nDTEND:20261122T133000Z\nSUMMARY:Wedding of   Teruna & Dara\nLOCATION:The Iris, 810 Geylang Road, City Plaza, #04-28/37 Singapore 409286\nDESCRIPTION:Together with their families, we invite you to join the wedding celebration.\nEND:VEVENT\nEND:VCALENDAR`;
+            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//S&H Wedding//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20261122T093000Z\nDTEND:20261122T133000Z\nSUMMARY:Wedding of   Teruna & Dara\nLOCATION:AR RAYYAN RESTAURANT, Blk 253 Choa Chu Kang Ave 1, #01-21, Singapore 680253\nDESCRIPTION:Together with their families, we invite you to join the wedding celebration.\nEND:VEVENT\nEND:VCALENDAR`;
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
