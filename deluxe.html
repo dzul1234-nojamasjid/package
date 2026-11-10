@@ -215,7 +215,7 @@
 
     <div id="splash">
         <h1>Teruna & Dara</h1>
-        <p style="margin-bottom: 30px; font-size: 0.9rem; letter-spacing: 2px;">22 . 11 . 2026</p>
+        <p style="margin-bottom: 30px; font-size: 0.9rem; letter-spacing: 2px;">01 . 01 . 2027</p>
         <button class="btn-open" onclick="openInvitation()">Tap to Open 💌</button>
     </div>
 
@@ -246,9 +246,9 @@
             <div class="names">Teruna & Dara</div>
             
             <div class="date-container">
-                <div class="day-text">Sunday</div>
-                <div class="date-text">22 November 2026</div>
-                <div class="time-text">5:30 PM - 9:30 PM</div>
+                <div class="day-text">Friday</div>
+                <div class="date-text">01 January 2027</div>
+                <div class="time-text">7:00 AM - 11:59 PM</div>
             </div>
 
             <div class="countdown-container" id="countdown">
@@ -500,7 +500,7 @@
         });
 
         // TARIKH DAH DIBETULKAN DI SINI
-        const targetDate = new Date("November 22, 2026 17:30:00").getTime();
+        const targetDate = new Date("January 01, 2027 07:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const distance = targetDate - now;
@@ -664,7 +664,7 @@
 
         // --- ICS (DAH DIBETULKAN NAMA DAN KURUNGAN) ---
         function downloadICS() {
-            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//S&H Wedding//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20261122T093000Z\nDTEND:20261122T133000Z\nSUMMARY:Wedding of Teruna \\& Dara\nLOCATION:AR RAYYAN RESTAURANT, Blk 253 Choa Chu Kang Ave 1, #01-21, Singapore 680253\nDESCRIPTION:Together with their families, we invite you to join the wedding celebration.\nEND:VEVENT\nEND:VCALENDAR`;
+            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//S&H Wedding//EN\nBEGIN:VEVENT\nUID:${new Date().getTime()}@wedding.com\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:20261231T230000Z\nDTEND:20270101T155900Z\nSUMMARY:Wedding of Teruna \\& Dara\nLOCATION:AR RAYYAN RESTAURANT, Blk 253 Choa Chu Kang Ave 1, #01-21, Singapore 680253\nDESCRIPTION:Together with their families, we invite you to join the wedding celebration.\nEND:VEVENT\nEND:VCALENDAR`;
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
