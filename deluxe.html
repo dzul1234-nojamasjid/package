@@ -368,6 +368,7 @@
 
     <script>
         // --- MAIN LOGIC ---
+        // Pastikan URL ini sama dengan URL Web App di Google Apps Script Tuan
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzAd5E9ImRmOOdvYrJNnebWdw96id6FVB-R31g77FVcYZIY3xLRoDXm5jSIJfDBfsCU/exec';
 
         let audioCtx = null, masterGain = null, delayNode = null, feedbackGain = null;
@@ -714,7 +715,7 @@
             animate();
         }
 
-        // --- RSVP LOGIC ---
+        // --- RSVP & WISH LOGIC (BUAT POPUP & HANTAR DATA) ---
         function openRSVP() { document.getElementById('rsvpModal').classList.add('active'); }
         function closeRSVP() {
             document.getElementById('rsvpModal').classList.remove('active');
@@ -722,14 +723,23 @@
             document.getElementById('rsvpForm').reset();
         }
 
-                    async function submitRSVP(e) {
+        function openWish() { document.getElementById('wishModal').classList.add('active'); }
+        function closeWish() {
+            document.getElementById('wishModal').classList.remove('active');
+            document.getElementById('wishMessage').innerHTML = '';
+            document.getElementById('wishForm').reset();
+        }
+
+        function openGuide() { document.getElementById('guideModal').classList.add('active'); }
+        function closeGuide() { document.getElementById('guideModal').classList.remove('active'); }
+
+        async function submitRSVP(e) {
             e.preventDefault();
             const btn = document.getElementById('rsvpSubmitBtn');
             const msg = document.getElementById('rsvpMessage');
             btn.innerText = 'Submitting...';
             msg.innerHTML = '';
 
-            // Guna FormData
             const formData = new FormData();
             formData.append('type', 'rsvp');
             formData.append('name', document.getElementById('guestName').value);
@@ -738,13 +748,11 @@
             formData.append('withFamily', document.getElementById('guestFamily').value);
 
             try {
-                // Hantar guna POST biasa
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
                     body: formData 
                 });
                 
-                // Kita cuba baca response, kalau berjaya maknanya data masuk
                 const text = await response.text();
                 console.log("Respons dari Google:", text); 
 
@@ -788,10 +796,6 @@
             btn.innerText = 'Send Wish';
         }
 
-        // --- GUIDE LOGIC ---
-        function openGuide() { document.getElementById('guideModal').classList.add('active'); }
-        function closeGuide() { document.getElementById('guideModal').classList.remove('active'); }
-            
         // --- WISH BOARD LOGIC (GUNA JSONP) ---
         async function loadWishes() {
             const list = document.getElementById('wishesList');
@@ -832,8 +836,8 @@
 
             // Cipta tag <script> untuk memanggil URL Apps Script
             const script = document.createElement('script');
-            // Tambah '&callback=handleWishesData' di hujung URL
-            script.src = SCRIPT_URL + '?action=getwishes&callback=handleWishesData&t=' + new Date().getTime();
+            // Tambah '&v=3' untuk paksa browser ambil data baru (bypass cache)
+            script.src = SCRIPT_URL + '?action=getwishes&callback=handleWishesData&v=3&t=' + new Date().getTime();
             script.id = 'jsonp-script';
             
             script.onerror = function() {
