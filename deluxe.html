@@ -722,7 +722,7 @@
             document.getElementById('rsvpForm').reset();
         }
 
-        async function submitRSVP(e) {
+            async function submitRSVP(e) {
             e.preventDefault();
             const btn = document.getElementById('rsvpSubmitBtn');
             const msg = document.getElementById('rsvpMessage');
@@ -738,19 +738,20 @@
             };
 
             try {
-                const response = await fetch(SCRIPT_URL, {
+                // Guna mode no-cors untuk hantar data tanpa disekat
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(data)
+                    mode: 'no-cors', // <--- KUNCI UTAMA DI SINI
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded' // Guna form format
+                    },
+                    body: new URLSearchParams(data).toString() // Tukar data ke format form
                 });
-                const json = await response.json();
 
-                if (json.status === 'ok') {
-                    msg.innerHTML = '✅ <span style="color: green;">Thank you! Your RSVP has been received.</span>';
-                    setTimeout(closeRSVP, 3000);
-                } else {
-                    msg.innerHTML = '❌ <span style="color: red;">Error: ' + json.message + '</span>';
-                }
+                // Sebab mode no-cors tak bagi kita baca respons, kita anggap ia berjaya jika tiada ralat berlaku
+                msg.innerHTML = '✅ <span style="color: green;">Thank you! Your RSVP has been received.</span>';
+                setTimeout(closeRSVP, 3000);
+                
             } catch (error) {
                 msg.innerHTML = '❌ <span style="color: red;">Network error. Please try again.</span>';
             }
@@ -765,7 +766,7 @@
             document.getElementById('wishForm').reset();
         }
 
-        async function submitWish(e) {
+                async function submitWish(e) {
             e.preventDefault();
             const btn = document.getElementById('wishSubmitBtn');
             const msg = document.getElementById('wishMessage');
@@ -779,25 +780,24 @@
             };
 
             try {
-                const response = await fetch(SCRIPT_URL, {
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(data)
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams(data).toString()
                 });
-                const json = await response.json();
 
-                if (json.status === 'ok') {
-                    msg.innerHTML = '✅ <span style="color: green;">Thank you! Your wish has been sent to the couple.</span>';
-                    document.getElementById('wishForm').reset(); 
-                    setTimeout(closeWish, 3000);
-                } else {
-                    msg.innerHTML = '❌ <span style="color: red;">Error: ' + json.message + '</span>';
-                }
+                msg.innerHTML = '✅ <span style="color: green;">Thank you! Your wish has been sent to the couple.</span>';
+                document.getElementById('wishForm').reset(); 
+                setTimeout(closeWish, 3000);
+                
             } catch (error) {
                 msg.innerHTML = '❌ <span style="color: red;">Network error. Please try again.</span>';
             }
             btn.innerText = 'Send Wish';
-        } // <-- KURUNGAN YANG HILANG DAH DITUTUP DI SINI
+        }
 
         // --- GUIDE LOGIC ---
         function openGuide() { document.getElementById('guideModal').classList.add('active'); }
