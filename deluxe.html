@@ -114,7 +114,20 @@
         }
         .card-front { background-image: url('teruna-deluxe-depan.jpg'); transform: rotateY(0deg); }
         .card-back { background-image: url('teruna-deluxe-belakang.jpg'); transform: rotateY(180deg); }
-
+         /* Kesan Kilauan 3D */
+        .card-glare {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.3) 25%, transparent 30%);
+            background-size: 200% 200%;
+            background-position: 100% 100%;
+            border-radius: 8px;
+            pointer-events: none;
+            transition: background-position 0.5s ease;
+        }
+        .card-container:hover .card-glare {
+            background-position: 0% 0%;
+        }
         /* --- TEXT & BUTTONS SECTION --- */
         .info-section { text-align: center; max-width: 350px; margin-bottom: 50px; padding-top: 20px; }
         .names { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--accent-rose); margin-bottom: 5px; line-height: 1.1; }
@@ -210,14 +223,18 @@
         
         <div class="top-controls">
             <button class="control-btn" id="audioBtn" onclick="toggleAudio()" title="Play Music">🎵</button>
-            <button class="control-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+            <button class="control-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Theme">☀️</button>
         </div>
 
         <div class="scene" id="scene">
-            <div class="card-container" id="card" onclick="flipCard(event)">
-                <div class="card-face card-front"></div>
-                <div class="card-face card-back"></div>
+        <div class="card-container" id="card" onclick="flipCard(event)">
+        <div class="card-face card-front">
+            <div class="card-glare"></div>
+        </div>
+        <div class="card-face card-back">
+            <div class="card-glare"></div>
             </div>
+          </div>
         </div>
 
         <div class="info-section" id="details">
@@ -369,7 +386,7 @@
         }
 
         // --- AUTO SCROLL LOGIC ---
-        let autoScrollActive = false, scrollSpeed = 0.8; 
+        let autoScrollActive = false, scrollSpeed = 0.7; 
 
         function startAutoScroll() {
             autoScrollActive = true;
@@ -602,35 +619,63 @@
             document.body.removeChild(link);
         }
 
-        // --- PARTICLES ---
+        // --- PARTICLES (CONFETTI & GOLD DUST) ---
         function initParticles() {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             document.getElementById('particles-js').appendChild(canvas);
-            let width, height, petals = [];
+            let width, height, particles = [];
+            
             function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
             window.addEventListener('resize', resize); resize();
 
-            class Petal {
+            class Particle {
                 constructor() {
-                    this.x = Math.random() * width; this.y = Math.random() * height - height;
-                    this.size = Math.random() * 5 + 5; this.speedY = Math.random() * 1.5 + 0.5; 
-                    this.opacity = Math.random() * 0.5 + 0.3; this.angle = Math.random() * Math.PI * 2;
+                    this.x = Math.random() * width; 
+                    this.y = Math.random() * height - height;
+                    this.size = Math.random() * 4 + 2; // Saiz habuk emas
+                    this.speedY = Math.random() * 1 + 0.5; 
+                    this.speedX = Math.random() * 1 - 0.5;
+                    this.opacity = Math.random() * 0.7 + 0.3; 
+                    this.isGold = Math.random() > 0.5; // 50% emas, 50% maroon
+                    this.angle = Math.random() * Math.PI * 2;
                 }
                 update() {
-                    this.y += this.speedY; this.x += Math.sin(this.angle) * 0.8; this.angle += 0.02;
-                    if (this.y > height) { this.y = -10; this.x = Math.random() * width; }
+                    this.y += this.speedY; 
+                    this.x += Math.sin(this.angle) * 0.5 + this.speedX; 
+                    this.angle += 0.02;
+                    if (this.y > height) { 
+                        this.y = -10; 
+                        this.x = Math.random() * width; 
+                    }
                 }
                 draw() {
-                    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.angle); ctx.beginPath();
-                    ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(183, 110, 121, ${this.opacity})`; ctx.fill(); ctx.restore();
+                    ctx.save(); 
+                    ctx.translate(this.x, this.y); 
+                    ctx.rotate(this.angle); 
+                    ctx.beginPath();
+                    
+                    if (this.isGold) {
+                        // Kesan Gold Dust (bulat kecil bercahaya)
+                        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`; // Warna Gold
+                        ctx.shadowBlur = 10;
+                        ctx.shadowColor = "rgba(212, 175, 55, 0.8)";
+                    } else {
+                        // Kesan Confetti (segi empat/kepingan)
+                        ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                        ctx.fillStyle = `rgba(92, 26, 46, ${this.opacity})`; // Warna Maroon
+                    }
+                    
+                    ctx.fill(); 
+                    ctx.restore();
                 }
             }
-            for (let i = 0; i < 50; i++) petals.push(new Petal());
+            for (let i = 0; i < 70; i++) particles.push(new Particle());
+            
             function animate() {
                 ctx.clearRect(0, 0, width, height);
-                petals.forEach(p => { p.update(); p.draw(); });
+                particles.forEach(p => { p.update(); p.draw(); });
                 requestAnimationFrame(animate);
             }
             animate();
