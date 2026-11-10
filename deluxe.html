@@ -722,33 +722,32 @@
             document.getElementById('rsvpForm').reset();
         }
 
-            async function submitRSVP(e) {
+                    async function submitRSVP(e) {
             e.preventDefault();
             const btn = document.getElementById('rsvpSubmitBtn');
             const msg = document.getElementById('rsvpMessage');
             btn.innerText = 'Submitting...';
             msg.innerHTML = '';
 
-            const data = {
-                type: 'rsvp',
-                name: document.getElementById('guestName').value,
-                attending: document.getElementById('guestAttending').value,
-                partner: document.getElementById('guestPartner').value,
-                withFamily: document.getElementById('guestFamily').value
-            };
+            // Guna FormData
+            const formData = new FormData();
+            formData.append('type', 'rsvp');
+            formData.append('name', document.getElementById('guestName').value);
+            formData.append('attending', document.getElementById('guestAttending').value);
+            formData.append('partner', document.getElementById('guestPartner').value);
+            formData.append('withFamily', document.getElementById('guestFamily').value);
 
             try {
-                // Guna mode no-cors untuk hantar data tanpa disekat
-                await fetch(SCRIPT_URL, {
+                // Hantar guna POST biasa
+                const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // <--- KUNCI UTAMA DI SINI
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded' // Guna form format
-                    },
-                    body: new URLSearchParams(data).toString() // Tukar data ke format form
+                    body: formData 
                 });
+                
+                // Kita cuba baca response, kalau berjaya maknanya data masuk
+                const text = await response.text();
+                console.log("Respons dari Google:", text); 
 
-                // Sebab mode no-cors tak bagi kita baca respons, kita anggap ia berjaya jika tiada ralat berlaku
                 msg.innerHTML = '✅ <span style="color: green;">Thank you! Your RSVP has been received.</span>';
                 setTimeout(closeRSVP, 3000);
                 
@@ -758,36 +757,26 @@
             btn.innerText = 'Submit RSVP';
         }
 
-        // --- WISH LOGIC ---
-        function openWish() { document.getElementById('wishModal').classList.add('active'); }
-        function closeWish() {
-            document.getElementById('wishModal').classList.remove('active');
-            document.getElementById('wishMessage').innerHTML = '';
-            document.getElementById('wishForm').reset();
-        }
-
-                async function submitWish(e) {
+        async function submitWish(e) {
             e.preventDefault();
             const btn = document.getElementById('wishSubmitBtn');
             const msg = document.getElementById('wishMessage');
             btn.innerText = 'Sending...';
             msg.innerHTML = '';
 
-            const data = {
-                type: 'wish',
-                name: document.getElementById('wishName').value,
-                wish: document.getElementById('wishText').value
-            };
+            const formData = new FormData();
+            formData.append('type', 'wish');
+            formData.append('name', document.getElementById('wishName').value);
+            formData.append('wish', document.getElementById('wishText').value);
 
             try {
-                await fetch(SCRIPT_URL, {
+                const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: new URLSearchParams(data).toString()
+                    body: formData
                 });
+                
+                const text = await response.text();
+                console.log("Respons dari Google:", text);
 
                 msg.innerHTML = '✅ <span style="color: green;">Thank you! Your wish has been sent to the couple.</span>';
                 document.getElementById('wishForm').reset(); 
