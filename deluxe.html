@@ -808,29 +808,37 @@
             const list = document.getElementById('wishesList');
             list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">Loading wishes...</p>';
             
-            // Fungsi ini akan dipanggil oleh Google Script
-            window.handleWishesData = function(wishes) {
-                if (!wishes || wishes.length === 0) {
-                    list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">No wishes yet. Be the first!</p>';
-                    return;
-                }
-                
-                wishes.reverse();
-                let htmlContent = '';
-                wishes.forEach(w => {
-                    htmlContent += `
-                        <div class="wish-card">
-                            <strong>${w.name}</strong>
-                            ${w.wish}
-                        </div>
-                    `;
-                });
-                list.innerHTML = htmlContent;
-                
+            window.handleWishesData = function(response) {
                 // Buang tag script selepas selesai
                 if(document.getElementById('jsonp-script')) {
                     document.getElementById('jsonp-script').remove();
                 }
+
+                // Semak jika Google Script hantar error
+                if (response && response.error) {
+                    console.error("Ralat dari Google Script:", response.error);
+                    list.innerHTML = '<p style="text-align:center; color:red;">Ralat sistem. Sila hubungi admin.</p>';
+                    return;
+                }
+
+                // Jika data kosong atau bukan array (senarai)
+                if (!response || !Array.isArray(response) || response.length === 0) {
+                    list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">No wishes yet. Be the first!</p>';
+                    return;
+                }
+                
+                // Jika ada data, susun terbalik (yang terbaru di atas)
+                const wishes = response.reverse();
+                let htmlContent = '';
+                wishes.forEach(w => {
+                    htmlContent += `
+                        <div class="wish-card">
+                            <strong>${w.name || 'Anonymous'}</strong>
+                            ${w.wish || ''}
+                        </div>
+                    `;
+                });
+                list.innerHTML = htmlContent;
             };
 
             // Cipta tag <script> untuk memanggil URL Apps Script
@@ -844,7 +852,7 @@
             };
             
             document.body.appendChild(script);
-          }        
+        }
     </script>
 </body>
 </html>
