@@ -737,7 +737,8 @@
             e.preventDefault();
             const btn = document.getElementById('rsvpSubmitBtn');
             btn.innerText = 'Sending...';
-            
+            btn.disabled = true; 
+
             const data = new URLSearchParams();
             data.append('type', 'rsvp');
             data.append('name', document.getElementById('guestName').value);
@@ -746,20 +747,19 @@
             data.append('withFamily', document.getElementById('guestFamily').value);
 
             try {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: {
-                     'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: data.toString(),
-                redirect: 'follow'
-            });
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: data.toString(),
+                    redirect: 'follow'
+                });
                 document.getElementById('rsvpMessage').innerHTML = '✅ Berjaya!';
-                btn.innerText = 'Submit RSVP';
             } catch (error) {
                 document.getElementById('rsvpMessage').innerHTML = '❌ Network error.';
                 console.error(error);
+            } finally {
                 btn.innerText = 'Submit RSVP';
+                btn.disabled = false;
             }
         }
 
@@ -768,7 +768,8 @@
             e.preventDefault();
             const btn = document.getElementById('wishSubmitBtn');
             btn.innerText = 'Sending...';
-            
+            btn.disabled = true;
+
             const data = new URLSearchParams();
             data.append('type', 'wish');
             data.append('name', document.getElementById('wishName').value);
@@ -777,20 +778,19 @@
             try {
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: {
-                         'Content-Type': 'application/x-www-form-urlencoded'
-                    },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: data.toString(),
                     redirect: 'follow'
                 });
                 document.getElementById('wishMessage').innerHTML = '✅ Wish sent successfully!';
                 document.getElementById('wishForm').reset();
-                btn.innerText = 'Send Wish';
                 setTimeout(closeWish, 2000);
             } catch (error) {
                 document.getElementById('wishMessage').innerHTML = '❌ Network error.';
                 console.error(error);
+            } finally {
                 btn.innerText = 'Send Wish';
+                btn.disabled = false;
             }
         }
 
