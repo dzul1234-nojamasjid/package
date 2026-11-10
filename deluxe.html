@@ -803,29 +803,19 @@
         function openGuide() { document.getElementById('guideModal').classList.add('active'); }
         function closeGuide() { document.getElementById('guideModal').classList.remove('active'); }
             
-        // --- WISH BOARD LOGIC ---
+        // --- WISH BOARD LOGIC (GUNA JSONP) ---
         async function loadWishes() {
             const list = document.getElementById('wishesList');
             list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">Loading wishes...</p>';
             
-            try {
-                const url = SCRIPT_URL + '?action=getwishes&t=' + new Date().getTime();
-                const response = await fetch(url);
-                
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                
-                const wishes = await response.json();
-                console.log("Wishes loaded from sheet:", wishes);
-
+            // Fungsi ini akan dipanggil oleh Google Script
+            window.handleWishesData = function(wishes) {
                 if (!wishes || wishes.length === 0) {
                     list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">No wishes yet. Be the first!</p>';
                     return;
                 }
-
+                
                 wishes.reverse();
-
                 let htmlContent = '';
                 wishes.forEach(w => {
                     htmlContent += `
@@ -835,13 +825,26 @@
                         </div>
                     `;
                 });
-                
                 list.innerHTML = htmlContent;
+                
+                // Buang tag script selepas selesai
+                if(document.getElementById('jsonp-script')) {
+                    document.getElementById('jsonp-script').remove();
+                }
+            };
 
-            } catch (error) {
-                console.error('Error loading wishes:', error);
-                list.innerHTML = '<p style="text-align:center; color:red;">Error loading wishes. Check console.</p>';
-            }
+            // Cipta tag <script> untuk memanggil URL Apps Script
+            const script = document.createElement('script');
+            // Tambah '&callback=handleWishesData' di hujung URL
+            script.src = SCRIPT_URL + '?action=getwishes&callback=handleWishesData&t=' + new Date().getTime();
+            script.id = 'jsonp-script';
+            
+            script.onerror = function() {
+                list.innerHTML = '<p style="text-align:center; color:red;">Error loading wishes. Please check your connection.</p>';
+            };
+            
+            document.body.appendChild(script);
+          }
         }
     </script>
 </body>
