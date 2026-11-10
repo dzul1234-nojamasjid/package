@@ -806,17 +806,18 @@
                 });
                 const json = await response.json();
 
+                // TUKAR BAHAGIAN INI
                 if (json.status === 'ok') {
                     msg.innerHTML = '✅ <span style="color: green;">Thank you! Your wish has been sent to the couple.</span>';
+                    document.getElementById('wishForm').reset(); // Kosongkan borang
                     setTimeout(closeWish, 3000);
                 } else {
+                    // Tunjuk error sebenar jika gagal
                     msg.innerHTML = '❌ <span style="color: red;">Error: ' + json.message + '</span>';
                 }
             } catch (error) {
                 msg.innerHTML = '❌ <span style="color: red;">Network error. Please try again.</span>';
             }
-            btn.innerText = 'Send Wish';
-        }
 
         // --- GUIDE LOGIC ---
         function openGuide() { document.getElementById('guideModal').classList.add('active'); }
