@@ -388,6 +388,7 @@
                 playLoopAudio(); // Mula muzik nasheed automatik
                 startAutoScroll(); // Mula auto-scroll
                 loadWishes(); // Load ucapan
+                autoRotate(); // <--- TAMBAH BARIS NI
             }, 800);
         }
 
@@ -420,23 +421,75 @@
             btn.innerHTML = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
         }
 
-        const card = document.getElementById('card');
+                const card = document.getElementById('card');
         let isFlipped = false;
+        
+        // --- AUTO ROTATE LOGIC ---
+        let currentAngle = 0;
+        let rotateSpeed = 0.5; // Laju pusingan. Besarkan nombor kalau nak laju (cth: 0.5)
+        let isAutoRotating = true;
+        let animationFrameId;
+
+        function autoRotate() {
+            if (!isAutoRotating) return;
+            
+            currentAngle += rotateSpeed;
+            // Jangan pusing kalau kad tengah 3D hover (untuk elak jadi pelik)
+            if (!isFlipped && !card.classList.contains('hovered-3d')) {
+                card.style.transform = `rotateY(${currentAngle}deg)`;
+            }
+            
+            animationFrameId = requestAnimationFrame(autoRotate);
+        }
+
+        // Mula pusing bila skrin dibuka
+        setTimeout(() => { autoRotate(); }, 1500); // Tunggu 1.5 saat baru mula pusing
+
+        function stopAutoRotate() {
+            isAutoRotating = false;
+            cancelAnimationFrame(animationFrameId);
+        }
 
         function flipCard(event) {
             if(event) event.stopPropagation();
+            stopAutoRotate(); // Berhenti pusing bila diklik
             isFlipped = !isFlipped;
             card.classList.toggle('flipped');
-            card.style.transform = ''; 
+            
+            // Kira semula posisi rotate supaya tak 'lompat' bila diklik
+            if (isFlipped) {
+                card.style.transform = `rotateY(180deg)`;
+            } else {
+                card.style.transform = `rotateY(0deg)`;
+                currentAngle = 0;
+            }
         }
 
+                document.getElementById('scene').addEventListener('mouseenter', () => {
+            // Bila mouse masuk, berhenti pusing
+            if (!isFlipped) {
+                stopAutoRotate();
+                card.classList.add('hovered-3d');
+                card.style.transition = 'transform 0.5s ease'; // Tambah smooth transition
+            }
+        });
+
         document.getElementById('scene').addEventListener('mousemove', (e) => {
-            if(isFlipped) return;
+            if(isFlipped || !card.classList.contains('hovered-3d')) return;
             const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
             const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            if(!card.classList.contains('flipped')) {
-                card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-            }
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        document.getElementById('scene').addEventListener('mouseleave', () => {
+            card.classList.remove('hovered-3d');
+            if(isFlipped) return;
+            
+            // Bila mouse keluar, sambung pusing balik
+            card.style.transition = 'transform 0.8s ease-in-out';
+            card.style.transform = `rotateY(${currentAngle}deg)`;
+            isAutoRotating = true;
+            autoRotate();
         });
 
         document.getElementById('scene').addEventListener('mouseleave', () => {
