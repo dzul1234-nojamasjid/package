@@ -368,7 +368,6 @@
 
     <script>
         // --- MAIN LOGIC ---
-        // Pastikan URL ini sama dengan URL Web App di Google Apps Script Tuan
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzAd5E9ImRmOOdvYrJNnebWdw96id6FVB-R31g77FVcYZIY3xLRoDXm5jSIJfDBfsCU/exec';
 
         let audioCtx = null, masterGain = null, delayNode = null, feedbackGain = null;
@@ -715,7 +714,7 @@
             animate();
         }
 
-        // --- RSVP & WISH LOGIC (BUAT POPUP & HANTAR DATA) ---
+        // --- RSVP & WISH LOGIC ---
         function openRSVP() { document.getElementById('rsvpModal').classList.add('active'); }
         function closeRSVP() {
             document.getElementById('rsvpModal').classList.remove('active');
@@ -733,67 +732,58 @@
         function openGuide() { document.getElementById('guideModal').classList.add('active'); }
         function closeGuide() { document.getElementById('guideModal').classList.remove('active'); }
 
+        // --- HANTAR RSVP ---
         async function submitRSVP(e) {
             e.preventDefault();
             const btn = document.getElementById('rsvpSubmitBtn');
-            const msg = document.getElementById('rsvpMessage');
-            btn.innerText = 'Submitting...';
-            msg.innerHTML = '';
-
-            const formData = new FormData();
-            formData.append('type', 'rsvp');
-            formData.append('name', document.getElementById('guestName').value);
-            formData.append('attending', document.getElementById('guestAttending').value);
-            formData.append('partner', document.getElementById('guestPartner').value);
-            formData.append('withFamily', document.getElementById('guestFamily').value);
+            btn.innerText = 'Sending...';
+            
+            const data = new URLSearchParams();
+            data.append('type', 'rsvp');
+            data.append('name', document.getElementById('guestName').value);
+            data.append('attending', document.getElementById('guestAttending').value);
+            data.append('partner', document.getElementById('guestPartner').value);
+            data.append('withFamily', document.getElementById('guestFamily').value);
 
             try {
-                const response = await fetch(SCRIPT_URL, {
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    body: formData 
+                    body: data
                 });
-                
-                const text = await response.text();
-                console.log("Respons dari Google:", text); 
-
-                msg.innerHTML = '✅ <span style="color: green;">Thank you! Your RSVP has been received.</span>';
-                setTimeout(closeRSVP, 3000);
-                
+                document.getElementById('rsvpMessage').innerHTML = '✅ Berjaya!';
+                btn.innerText = 'Submit RSVP';
             } catch (error) {
-                msg.innerHTML = '❌ <span style="color: red;">Network error. Please try again.</span>';
+                document.getElementById('rsvpMessage').innerHTML = '❌ Network error.';
+                console.error(error);
+                btn.innerText = 'Submit RSVP';
             }
-            btn.innerText = 'Submit RSVP';
         }
 
+        // --- HANTAR WISH ---
         async function submitWish(e) {
             e.preventDefault();
             const btn = document.getElementById('wishSubmitBtn');
-            const msg = document.getElementById('wishMessage');
             btn.innerText = 'Sending...';
-            msg.innerHTML = '';
-
-            const formData = new FormData();
-            formData.append('type', 'wish');
-            formData.append('name', document.getElementById('wishName').value);
-            formData.append('wish', document.getElementById('wishText').value);
+            
+            const data = new URLSearchParams();
+            data.append('type', 'wish');
+            data.append('name', document.getElementById('wishName').value);
+            data.append('wish', document.getElementById('wishText').value);
 
             try {
-                const response = await fetch(SCRIPT_URL, {
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    body: formData
+                    body: data
                 });
-                
-                const text = await response.text();
-                console.log("Respons dari Google:", text);
-
-                msg.innerHTML = '✅ <span style="color: green;">Thank you! Your wish has been sent to the couple.</span>';
-                document.getElementById('wishForm').reset(); 
-                setTimeout(closeWish, 3000);
-                
+                document.getElementById('wishMessage').innerHTML = '✅ Wish sent successfully!';
+                document.getElementById('wishForm').reset();
+                btn.innerText = 'Send Wish';
+                setTimeout(closeWish, 2000);
             } catch (error) {
-                msg.innerHTML = '❌ <span style="color: red;">Network error. Please try again.</span>';
+                document.getElementById('wishMessage').innerHTML = '❌ Network error.';
+                console.error(error);
+                btn.innerText = 'Send Wish';
             }
-            btn.innerText = 'Send Wish';
         }
 
         // --- WISH BOARD LOGIC (GUNA JSONP) ---
@@ -802,25 +792,21 @@
             list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">Loading wishes...</p>';
             
             window.handleWishesData = function(response) {
-                // Buang tag script selepas selesai
                 if(document.getElementById('jsonp-script')) {
                     document.getElementById('jsonp-script').remove();
                 }
 
-                // Semak jika Google Script hantar error
                 if (response && response.error) {
                     console.error("Ralat dari Google Script:", response.error);
                     list.innerHTML = '<p style="text-align:center; color:red;">Ralat sistem. Sila hubungi admin.</p>';
                     return;
                 }
 
-                // Jika data kosong atau bukan array (senarai)
                 if (!response || !Array.isArray(response) || response.length === 0) {
                     list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">No wishes yet. Be the first!</p>';
                     return;
                 }
                 
-                // Jika ada data, susun terbalik (yang terbaru di atas)
                 const wishes = response.reverse();
                 let htmlContent = '';
                 wishes.forEach(w => {
@@ -834,9 +820,7 @@
                 list.innerHTML = htmlContent;
             };
 
-            // Cipta tag <script> untuk memanggil URL Apps Script
             const script = document.createElement('script');
-            // Tambah '&v=3' untuk paksa browser ambil data baru (bypass cache)
             script.src = SCRIPT_URL + '?action=getwishes&callback=handleWishesData&v=3&t=' + new Date().getTime();
             script.id = 'jsonp-script';
             
