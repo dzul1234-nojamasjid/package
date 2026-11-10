@@ -824,28 +824,44 @@
             
         // --- WISH BOARD LOGIC ---
         async function loadWishes() {
+            const list = document.getElementById('wishesList');
+            list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">Loading wishes...</p>';
+            
             try {
-                const response = await fetch(SCRIPT_URL + '?t=' + new Date().getTime(), { method: 'GET' });
+                // Guna timestamp untuk pastikan takde cache
+                const url = SCRIPT_URL + '?t=' + new Date().getTime();
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                
                 const wishes = await response.json();
-                const list = document.getElementById('wishesList');
+                console.log("Wishes loaded from sheet:", wishes); // Untuk debug
 
-                if (wishes.length === 0) {
+                if (!wishes || wishes.length === 0) {
                     list.innerHTML = '<p style="text-align:center; font-style:italic; opacity:0.6;">No wishes yet. Be the first!</p>';
                     return;
                 }
 
+                // Terbalikkan supaya yang terbaru di atas
                 wishes.reverse();
 
-                list.innerHTML = wishes.map(w => `
-                    <div class="wish-card">
-                        <strong>${w.name}</strong>
-                        ${w.wish}
-                    </div>
-                `).join('');
+                let htmlContent = '';
+                wishes.forEach(w => {
+                    htmlContent += `
+                        <div class="wish-card">
+                            <strong>${w.name}</strong>
+                            ${w.wish}
+                        </div>
+                    `;
+                });
+                
+                list.innerHTML = htmlContent;
 
             } catch (error) {
                 console.error('Error loading wishes:', error);
-                document.getElementById('wishesList').innerHTML = '<p style="text-align:center; color:red;">Error loading wishes.</p>';
+                list.innerHTML = '<p style="text-align:center; color:red;">Error loading wishes. Check console.</p>';
             }
         }
     </script>
